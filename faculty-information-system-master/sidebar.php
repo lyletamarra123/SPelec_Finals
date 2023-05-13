@@ -59,9 +59,12 @@
 </style>
 <div class="col-2 menu">
 	<ul>
-		<a href="profile.php"><li><i class="fa fa-user"></i>Profile</li></a>
-		<a href="syllabus.php"><li><i class="fa fa-book"></i>Syllabus</li></a>
-		<a href="results.php"><li><i class="fa fa-tachometer-alt"></i>Results</li></a>
+		<a href="profile.php"><li><i class="fa fa-user"></i>Information</li></a>
+		<a href="syllabus.php"><li><i class="fa fa-briefcase"></i>Work History</li></a>
+		<a href="results.php"><li><i class="fa fa-book"></i>Publications</li></a>
+		<a href="help.php"><li><i class="fa fa-graduation-cap"></i>Degrees Earned</li></a>
+		<a href="syllabus.php"><li><i class="fa fa-award"></i>Grants/Awards</li></a>
+		<a href="results.php"><li><i class="fa fa-chalkboard-teacher"></i>Courses Taught</li></a>
 		<a href="help.php"><li><i class="fa fa-question-circle"></i>Help</li></a>
 		<a href="includes/signout.php"><li><i class="fa fa-sign-out-alt"></i>Logout</li></a>
 	</ul>

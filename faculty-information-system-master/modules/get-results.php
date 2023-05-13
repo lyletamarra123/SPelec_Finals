@@ -5,13 +5,19 @@
     $sem_gpa_sum = 0.0;
     $sem_credit_sum = 0;
     $q = $_GET['q'];  
-    $sql = "SELECT * FROM marks,subject WHERE subject.SubjectCode=marks.SubjectId AND marks.CourseId='".$_SESSION['cid']."' AND marks.StudentNo='".$_SESSION['sno']."' AND marks.Year='". $_SESSION['ayear'] ."' AND marks.Semester='". $q ."' ORDER BY marks.SubjectId";
-    $result = mysqli_query($conn, $sql);
-    $resulCheck = mysqli_num_rows($result);
+    $sql = "SELECT * FROM marks INNER JOIN subject ON subject.SubjectCode=marks.SubjectId WHERE marks.CourseId=:cid AND marks.StudentNo=:sno AND marks.Year=:ayear AND marks.Semester=:semester ORDER BY marks.SubjectId";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':cid', $_SESSION['cid']);
+    $stmt->bindParam(':sno', $_SESSION['sno']);
+    $stmt->bindParam(':ayear', $_SESSION['ayear']);
+    $stmt->bindParam(':semester', $q);
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    $resulCheck = count($result);
     if($resulCheck>0){
         
         echo "<tr><th>Code</th><th>Name</th><th>Credits</th><th>Results</th></tr>";
-        while($row = mysqli_fetch_array($result))
+        foreach($result as $row)
         {
             $credit = substr($row['SubjectId'], -1);
             if($row['Marks'])$sem_credit_sum +=$credit;
@@ -67,5 +73,7 @@
             return '-';
         }     
     }
-    mysqli_close($conn);
-?>
+    $conn = null;
+
+
+

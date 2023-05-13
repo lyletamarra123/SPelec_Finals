@@ -6,6 +6,8 @@
 -- Generation Time: Apr 04, 2021 at 07:00 AM
 -- Server version: 5.6.48-88.0
 -- PHP Version: 7.2.22
+create database fis;
+use fis;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;

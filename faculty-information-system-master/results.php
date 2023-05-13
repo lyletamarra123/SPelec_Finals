@@ -8,8 +8,11 @@
 		$credit_sum = 0;
 
 		$sql1 = "SELECT * FROM marks,subject WHERE subject.SubjectCode=marks.SubjectId AND marks.CourseId='".$_SESSION['cid']."' AND marks.StudentNo='".$_SESSION['sno']."'";
-		$result1 = mysqli_query($conn, $sql1);
-		$resulCheck1 = mysqli_num_rows($result1);
+		$stmt1 = $conn->prepare($sql1);
+        $stmt1->bindParam(':cid', $_SESSION['cid']);
+        $stmt1->bindParam(':sno', $_SESSION['sno']);
+     
+        $resulCheck1 = $stmt1->rowCount();
 		if($resulCheck1>0){
 			while($row = mysqli_fetch_array($result1))
 			{
