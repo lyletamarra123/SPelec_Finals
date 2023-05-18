@@ -193,50 +193,19 @@ ob_start();
         <form action=">" method="post">
             <div class="row">
                 <div class="col-8">
-
-
                     <div class="user-list">
-                        <label for="ftitle">All Department <i class="fa fa-plus"></i></label>
-
+                        <label for="ftitle">Books Publication <i class="fa fa-plus"></i></label>
                         <hr>
-
                         <ul>
                             <li>
-                                Department of Communication, Languages and Literature
+                                FORWARD
                                 <div class="icons">
                                     <i class="fa fa-edit"></i>
                                     <i class="fa fa-trash"></i>
                                 </div>
                             </li>
-                            <li>
-                                Department of Mathematics and Sciences
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-
-                            <li>
-                                Department of Social Sciences and Philosophy
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-
-                            <li>
-                                Department of Psychology and Library Information Science
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-
-
                         </ul>
-
                     </div>
-
                     <!-- <label for="fdesc">FAQ Description *</label>
                     <textarea rows="10" class='form-input' id="fdesc" name="fdesc" placeholder="..." required></textarea> -->
                 </div>
@@ -246,10 +215,58 @@ ob_start();
         </form>
     </div>
     <div id="Jobs" class="tabcontent">
-        <h3>Jobs</h3>
-        <input type="search" name="searchDelete" placeholder="Course ID">
-        <p><i class="fa fa-exclamation-triangle"></i> This feature will be added soon.</p>
-        <input class="btn" type="submit" disabled value="Confirm Delete">
+        <form action=">" method="post">
+            <div class="row">
+                <div class="col-8">
+                    <div class="user-list">
+                        <label for="ftitle">Job Type <i class="fa fa-plus"></i></label>
+                        <hr>
+                        <ul>
+                            <li>
+                                Professor
+                                <div class="icons">
+                                    <i class="fa fa-edit"></i>
+                                    <i class="fa fa-trash"></i>
+                                </div>
+                            </li>
+                            <li>
+                                Associate Professor
+                                <div class="icons">
+                                    <i class="fa fa-edit"></i>
+                                    <i class="fa fa-trash"></i>
+                                </div>
+                            </li>
+                            <li>
+                                Assistant Professor
+                                <div class="icons">
+                                    <i class="fa fa-edit"></i>
+                                    <i class="fa fa-trash"></i>
+                                </div>
+                            </li>
+                            <li>
+                                Lecturer
+                                <div class="icons">
+                                    <i class="fa fa-edit"></i>
+                                    <i class="fa fa-trash"></i>
+                                </div>
+                            </li>
+                            <li>
+                                Adjunct Professor
+                                <div class="icons">
+                                    <i class="fa fa-edit"></i>
+                                    <i class="fa fa-trash"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <label for="fdesc">FAQ Description *</label>
+                    <textarea rows="10" class='form-input' id="fdesc" name="fdesc" placeholder="..." required></textarea> -->
+                </div>
+            </div>
+            <!-- <input type="hidden" name='operation' value='add'> -->
+            <input class="btn" type="submit" name="submit" value="Add to Database">
+        </form>
+
     </div>
 
 </div>
