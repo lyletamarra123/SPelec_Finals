@@ -60,11 +60,12 @@
 <div class="col-2 menu">
 	<ul>
 		<a href="Facultymembers.php"><li><i class="fa fa-user"></i>Information</li></a>
-		<a href="syllabus.php"><li><i class="fa fa-briefcase"></i>Work History</li></a>
-		<a href="results.php"><li><i class="fa fa-book"></i>Publications</li></a>
-		<a href="help.php"><li><i class="fa fa-graduation-cap"></i>Degrees Earned</li></a>
-		<a href="syllabus.php"><li><i class="fa fa-award"></i>Grants/Awards</li></a>
-		<a href="results.php"><li><i class="fa fa-chalkboard-teacher"></i>Courses Taught</li></a>
+		<a href="workhistory.php"><li><i class="fa fa-briefcase"></i>Work History</li></a>
+		<a href="publications.php"><li><i class="fa fa-book"></i>Publications</li></a>
+		<a href="degrees.php"><li><i class="fa fa-graduation-cap"></i>Degrees Earned</li></a>
+		<a href="grantsAwards.php"><li><i class="fa fa-award"></i>Grants/Awards</li></a>
+		<a href="courses.php"><li><i class="fa fa-chalkboard-teacher"></i>Courses Taught</li></a>
+		<a href="departments.php"><li><i class="fa fa-building"></i>Departments</li></a>
 		<a href="help.php"><li><i class="fa fa-question-circle"></i>Help</li></a>
 		<a href="includes/signout.php"><li><i class="fa fa-sign-out-alt"></i>Logout</li></a>
 	</ul>

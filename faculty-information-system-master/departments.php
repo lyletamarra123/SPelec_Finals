@@ -39,20 +39,19 @@
 <div class="row">
 	<?php require('sidebar.php'); ?>
 	<div class="col-6">
-		<h1>Faculty Members</h1>
+		<h1>Faculty Departments</h1>
 		<div class="row">
-        <input type="text" id="searchBar" oninput="getFaculty(this.value)" placeholder="Search by Faculty Name" title="Type a faculty name">
-        <table id="facultyList">
+        <input type="text" id="searchBar" oninput="getDepartments(this.value)" placeholder="Search by Code, Name, or Location" title="Type a faculty name">
+        <table id="departmentList">
             <tr>
-                <th>Faculty ID</th>
-                <th>Faculty Name</th>
-                <th>Position</th>
-				<th>Department</th>
-				<th>Email</th>
-				<th>PhoneNumber</th>
+                <th>Department Code</th>
+				<th>Department Name</th>
+                <th>Email</th>
+				<th>Phone</th>
+				<th>Location</th>
             </tr>
             <?php 
-            $sql = "SELECT * FROM faculty ORDER BY RAND() LIMIT 4";
+            $sql = "SELECT * FROM department ORDER BY RAND() LIMIT 4";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll();
@@ -60,16 +59,15 @@
             if ($rowCount > 0) {
                 foreach ($result as $row) {
                     echo "<tr>";
-                    echo "<td>" . $row['FacultyID'] . "</td>";
-                    echo "<td>" . $row['FacultyName'] . "</td>";
-                    echo "<td>" . $row['Position'] . "</td>";
-					echo "<td>" . $row['Department'] . "</td>";
-					echo "<td>" . $row['Email'] . "</td>";
-					echo "<td>" . $row['PhoneNumber'] . "</td>";
+                    echo "<td>" . $row['DepartmentCode'] . "</td>";
+                    echo "<td>" . $row['DepartmentName'] . "</td>";
+                    echo "<td>" . $row['Email'] . "</td>";
+					echo "<td>" . $row['Phone'] . "</td>";
+					echo "<td>" . $row['Location'] . "</td>";
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='3'>No faculty members found.</td></tr>";
+                echo "<tr><td colspan='3'>No Department found.</td></tr>";
             }
             ?>
         </table>  
@@ -78,7 +76,7 @@
 </div>
 
 <script>
-function getFaculty(str) {
+function getDepartments(str) {
     if (window.XMLHttpRequest) {
         // code for modern browsers
         xmlhttp = new XMLHttpRequest();
@@ -88,10 +86,10 @@ function getFaculty(str) {
     }
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("facultyList").innerHTML = this.responseText;
+            document.getElementById("departmentList").innerHTML = this.responseText;
         }
     };
-    xmlhttp.open("GET", "modules/search-faculty.php?q=" + str, true);
+    xmlhttp.open("GET", "modules/search-departments.php?q=" + str, true);
     xmlhttp.send();
 }
 </script>

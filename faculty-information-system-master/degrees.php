@@ -39,20 +39,18 @@
 <div class="row">
 	<?php require('sidebar.php'); ?>
 	<div class="col-6">
-		<h1>Faculty Members</h1>
+		<h1>Degrees Earned by Faculty member</h1>
 		<div class="row">
-        <input type="text" id="searchBar" oninput="getFaculty(this.value)" placeholder="Search by Faculty Name" title="Type a faculty name">
-        <table id="facultyList">
+        <input type="text" id="searchBar" oninput="getDegrees(this.value)" placeholder="Search by Faculty Name" title="Type a faculty name">
+        <table id="degreeList">
             <tr>
-                <th>Faculty ID</th>
                 <th>Faculty Name</th>
-                <th>Position</th>
-				<th>Department</th>
-				<th>Email</th>
-				<th>PhoneNumber</th>
+				<th>Degree/s</th>
+                <th>Date Attained</th>
+				<th>Institution</th>
             </tr>
             <?php 
-            $sql = "SELECT * FROM faculty ORDER BY RAND() LIMIT 4";
+            $sql = "SELECT * FROM degrees ORDER BY RAND() LIMIT 4";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll();
@@ -60,16 +58,14 @@
             if ($rowCount > 0) {
                 foreach ($result as $row) {
                     echo "<tr>";
-                    echo "<td>" . $row['FacultyID'] . "</td>";
                     echo "<td>" . $row['FacultyName'] . "</td>";
-                    echo "<td>" . $row['Position'] . "</td>";
-					echo "<td>" . $row['Department'] . "</td>";
-					echo "<td>" . $row['Email'] . "</td>";
-					echo "<td>" . $row['PhoneNumber'] . "</td>";
+                    echo "<td>" . $row['Degree'] . "</td>";
+                    echo "<td>" . $row['DateAttained'] . "</td>";
+					echo "<td>" . $row['Institution'] . "</td>";
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='3'>No faculty members found.</td></tr>";
+                echo "<tr><td colspan='3'>No faculty member found.</td></tr>";
             }
             ?>
         </table>  
@@ -78,7 +74,7 @@
 </div>
 
 <script>
-function getFaculty(str) {
+function getDegrees(str) {
     if (window.XMLHttpRequest) {
         // code for modern browsers
         xmlhttp = new XMLHttpRequest();
@@ -88,10 +84,10 @@ function getFaculty(str) {
     }
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("facultyList").innerHTML = this.responseText;
+            document.getElementById("degreeList").innerHTML = this.responseText;
         }
     };
-    xmlhttp.open("GET", "modules/search-faculty.php?q=" + str, true);
+    xmlhttp.open("GET", "modules/search-degrees.php?q=" + str, true);
     xmlhttp.send();
 }
 </script>
