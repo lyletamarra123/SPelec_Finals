@@ -13,12 +13,17 @@
 <?php
 if (isset($_POST['submit'])) {
     if($_POST['operation'] === 'add'){
-        $sql="INSERT INTO subject VALUES ('$_POST[sucode]','$_POST[suname]','$_POST[sucid]',NULL)";
-        if (mysqli_query($conn, $sql)) {
+        $sql="INSERT INTO subject VALUES (:sucode, :suname, :sucid, NULL)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':sucode', $_POST['sucode']);
+        $stmt->bindValue(':suname', $_POST['suname']);
+        $stmt->bindValue(':sucid', $_POST['sucid']);
+        
+        if ($stmt->execute()) {
             echo "<div class='alert success'>New Subject added successfully</div>";
             ob_start();
         } else {
-            echo "<div class='alert info'>Error: " . mysqli_error($conn) . "</div>";
+            echo "<div class='alert info'>Error: " . $stmt->errorInfo()[2] . "</div>";
         }
     }elseif($_POST['operation'] === 'change'){
 
@@ -33,8 +38,8 @@ if (isset($_POST['submit'])) {
     </div>
 
     <div id="Add" class="tabcontent">
-    <form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post">
-    <div class="row">
+        <form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post">
+            <div class="row">
                 <div class="col-4">
                     <label for="sucode">Subject Code *</label>
                     <input class='form-input' type="text" id="sucode" name="sucode" placeholder="SENG XXXXX" maxlength="11" required>
@@ -46,10 +51,11 @@ if (isset($_POST['submit'])) {
                     <select class="form-input" id="sucid" name="sucid" required>
                         <?php 
                             $sql = "SELECT CourseId,CourseName FROM course ORDER BY RAND()";
-                            $result = mysqli_query($conn, $sql);
-                            $resulCheck = mysqli_num_rows($result);
+                            $stmt = $conn->query($sql);
+                            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            $resulCheck = count($result);
                             if($resulCheck>0){
-                                while($row = mysqli_fetch_array($result))
+                                foreach($result as $row)
                                 {
                                     echo "<option value='". $row['CourseId']."'>".$row['CourseId']." - ". $row['CourseName'] ."</option>";
                                 }
@@ -65,34 +71,35 @@ if (isset($_POST['submit'])) {
         </form>
     </div>
 
-        <div id="Change" class="tabcontent">
+    <div id="Change" class="tabcontent">
         <h3>Select Subject to Change</h3>
-        <input type="search" name="searchChange" placeholder="Subject Code" >
+        <input type="search" name="searchChange" placeholder="Subject Code">
         <table id="subjectList left" style="width:100%;text-align:left;">
-        <?php
-            $sql="SELECT DISTINCT * FROM subject ORDER BY RAND() LIMIT 5" ;
-                $result = mysqli_query($conn,$sql);
-                $resulCheck = mysqli_num_rows($result);
-            if(($resulCheck)>0){
-                while($row = mysqli_fetch_array($result)) {
-                    echo "<tr>";
-                    echo "<td>" . $row['SubjectCode'] . "</td>";
-                    echo "<td>" . $row['SubjectName'];
-                    echo "</td></tr>";
+            <?php
+                $sql="SELECT DISTINCT * FROM subject ORDER BY RAND() LIMIT 5";
+                $stmt = $conn->query($sql);
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $resulCheck = count($result);
+                if(($resulCheck)>0){
+                    foreach($result as $row) {
+                        echo "<tr>";
+                        echo "<td>" . $row['SubjectCode'] . "</td>";
+                        echo "<td>" . $row['SubjectName'];
+                        echo "</td></tr>";
+                    }
                 }
-            }
             ?>
         </table>
         <p><i class="fa fa-exclamation-triangle"></i> This feature will be added soon.</p>
         <input class="btn" type="submit" disabled value="Submit Change">
-        </div>
+    </div>
 
-        <div id="Delete" class="tabcontent">
+    <div id="Delete" class="tabcontent">
         <h3>Select Subject to Delete</h3>
-        <input type="search" name="searchDelete" placeholder="Subject Code" >
+        <input type="search" name="searchDelete" placeholder="Subject Code">
         <p><i class="fa fa-exclamation-triangle"></i> This feature will be added soon.</p>
         <input class="btn" type="submit" disabled value="Confirm Delete">
-        </div>
+    </div>
 </div>
 
 <div class="col-2 notice">

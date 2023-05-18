@@ -59,7 +59,7 @@
 </style>
 <div class="col-2 menu">
 	<ul>
-		<a href="profile.php"><li><i class="fa fa-user"></i>Information</li></a>
+		<a href="Facultymembers.php"><li><i class="fa fa-user"></i>Information</li></a>
 		<a href="syllabus.php"><li><i class="fa fa-briefcase"></i>Work History</li></a>
 		<a href="results.php"><li><i class="fa fa-book"></i>Publications</li></a>
 		<a href="help.php"><li><i class="fa fa-graduation-cap"></i>Degrees Earned</li></a>

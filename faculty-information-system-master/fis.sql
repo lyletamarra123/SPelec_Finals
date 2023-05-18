@@ -151,7 +151,7 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`StudentNo`, `StudentName`, `Password`, `EmailPersonal`, `EmailKLN`, `AcYear`, `Address`, `ContactNo`, `ZScore`, `CourseId`, `GPA`) VALUES
-('SE/2015/003', 'Nuwan Sameera Alawatta', '12345', 'nuwansalawatta@gmail.com', 'alawatta_se15003@gmail.com', 2015, 'No. 3/7, Magalegoda, Veyangoda.', '0757871494', 1.7702, 'SENG', 3.76),
+('SE/2015/003', 'Lyle Kevin Tamarra', '12345', 'nuwansalawatta@gmail.com', 'alawatta_se15003@gmail.com', 2015, 'No. 3/7, Magalegoda, Veyangoda.', '0757871494', 1.7702, 'SENG', 3.76),
 ('17/rp/01007', 'mucyo', '12345', 'erwe@mail.com', 'mucyo_007@stu.kln.ac.lk', 2021, 'kn6785', '0785792941', 1, 'SENG', 0);
 
 -- --------------------------------------------------------
@@ -206,6 +206,34 @@ INSERT INTO `subject` (`SubjectCode`, `SubjectName`, `CourseId`, `CourseContet`)
 ('SENG 24213', 'Computer Networks', 'SENG', ''),
 ('SENG 31212', 'Software Quality', 'SENG', ''),
 ('SENG 31222', 'Information Security', 'SENG', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Faculty`
+--
+
+CREATE TABLE `faculty` (
+  `FacultyID` varchar(10) NOT NULL,
+  `FacultyName` varchar(256) NOT NULL,
+  `Position` varchar(20) NOT NULL,
+  `Email` varchar(50) NOT NULL,
+  `PhoneNumber` varchar(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `faculty`
+--
+
+INSERT INTO `faculty` (`FacultyID`, `FacultyName`, `Position`, `Email`, `PhoneNumber`) VALUES
+('SCS 01', 'Jovelyn Cuizon', 'Dean', 'jovelyn.cuizon@edu.ph', '09062144724'),
+('SCS 02', 'Roderick Bandalan', 'Chairperson', 'roderick.bandalan@edu.ph', '06418739465'),
+('SCS 03', 'Jeoffrey Gudio', 'Secretary', 'jeoffrey.gudio@edu.ph', '07193726485'),
+('SCS 04', 'Lorna Miro', 'Teacher', 'lorna.miro@edu.ph', '09071973642'),
+('SCS 05', 'Gene Abello', 'Teacher', 'gene.abello@edu.ph', '07094601035'),
+('SCS 06', 'Josephine Petralba', 'Teacher', 'josephine.petralba@edu.ph', '09060133946'),
+('SCS 07', 'Vicente Patalita III', 'Teacher', 'vicente.patalita@edu.ph', '09017033694'),
+('SCS 08', 'Leeroy Gadiane', 'Teacher', 'leeroy.gadiane@edu.ph', '09087033964');
 
 --
 -- Indexes for dumped tables
