@@ -89,7 +89,7 @@ ob_start();
                 </div>
             </div>
             <!-- <input type="hidden" name='operation' value='add'> -->
-            <input class="btn" type="submit" name="submit" value="Add to Database">
+            <!-- <input class="btn" type="submit" name="submit" value="Add to Database"> -->
         </form>
     </div>
 
@@ -184,8 +184,8 @@ ob_start();
                     <textarea rows="10" class='form-input' id="fdesc" name="fdesc" placeholder="..." required></textarea> -->
                 </div>
             </div>
-            <!-- <input type="hidden" name='operation' value='add'> -->
-            <input class="btn" type="submit" name="submit" value="Add to Database">
+            <!-- <input type="hidden" name='operation' value='add'>
+            <input class="btn" type="submit" name="submit" value="Add to Database"> -->
         </form>
     </div>
 
@@ -211,7 +211,7 @@ ob_start();
                 </div>
             </div>
             <!-- <input type="hidden" name='operation' value='add'> -->
-            <input class="btn" type="submit" name="submit" value="Add to Database">
+            <!-- <input class="btn" type="submit" name="submit" value="Add to database"> -->
         </form>
     </div>
     <div id="Jobs" class="tabcontent">
@@ -264,14 +264,14 @@ ob_start();
                 </div>
             </div>
             <!-- <input type="hidden" name='operation' value='add'> -->
-            <input class="btn" type="submit" name="submit" value="Add to Database">
+            <!-- <input class="btn" type="submit" name="submit" value="Add to Database"> -->
         </form>
 
     </div>
 
 </div>
 
-<div class="col-2 notice">
+<!-- <div class="col-2 notice">
     <h2><i class='fa fa-question-circle'></i> Notice</h2>
     <p>Please check twice before you submit.</p>
     <h2><i class="fa fa-link"></i> Quick Links</h2>
@@ -282,7 +282,7 @@ ob_start();
         <li><a href="course.php">Add New Course</a></li>
     </ul>
     </p>
-</div>
+</div> -->
 
 <style>
     .user-list {

@@ -32,26 +32,18 @@ ob_start();
     <div class="user-list">
 
         <h3 class="user-list-header">List of all Faculty Members </h3><i class="fa fa-plus"></i>
-<hr>
+        <hr>
 
         <ul>
             <li>
-              Mr. Gene P abello
+                Mr. Gene P abello
                 <div class="icons">
                     <i class="fa fa-edit"></i>
                     <i class="fa fa-trash"></i>
                 </div>
             </li>
             <li>
-               Mrs. Josephine Petralba
-                <div class="icons">
-                    <i class="fa fa-edit"></i>
-                    <i class="fa fa-trash"></i>
-                </div>
-            </li>
-
-            <li>
-               Mr. Roderick Bandalan
+                Mrs. Josephine Petralba
                 <div class="icons">
                     <i class="fa fa-edit"></i>
                     <i class="fa fa-trash"></i>
@@ -59,7 +51,15 @@ ob_start();
             </li>
 
             <li>
-               Mrs. Marisa
+                Mr. Roderick Bandalan
+                <div class="icons">
+                    <i class="fa fa-edit"></i>
+                    <i class="fa fa-trash"></i>
+                </div>
+            </li>
+
+            <li>
+                Mrs. Marisa
                 <div class="icons">
                     <i class="fa fa-edit"></i>
                     <i class="fa fa-trash"></i>
@@ -81,7 +81,7 @@ ob_start();
             </li>
 
         </ul>
-
+    </div>
     </div>
 
     <style>
