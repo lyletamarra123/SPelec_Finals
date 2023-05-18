@@ -31,27 +31,19 @@ ob_start();
 
     <div class="user-list">
 
-        <h3 class="user-list-header">User List </h3><i class="fa fa-plus"></i>
+        <h3 class="user-list-header">List of all Faculty Members </h3><i class="fa fa-plus"></i>
 <hr>
 
         <ul>
             <li>
-                Rolly Barinan
+              Mr. Gene P abello
                 <div class="icons">
                     <i class="fa fa-edit"></i>
                     <i class="fa fa-trash"></i>
                 </div>
             </li>
             <li>
-                Christaian Verallo
-                <div class="icons">
-                    <i class="fa fa-edit"></i>
-                    <i class="fa fa-trash"></i>
-                </div>
-            </li>
-
-            <li>
-                Denverth Larida
+               Mrs. Josephine Petralba
                 <div class="icons">
                     <i class="fa fa-edit"></i>
                     <i class="fa fa-trash"></i>
@@ -59,21 +51,29 @@ ob_start();
             </li>
 
             <li>
-                Lyle Tammara
+               Mr. Roderick Bandalan
+                <div class="icons">
+                    <i class="fa fa-edit"></i>
+                    <i class="fa fa-trash"></i>
+                </div>
+            </li>
+
+            <li>
+               Mrs. Marisa
                 <div class="icons">
                     <i class="fa fa-edit"></i>
                     <i class="fa fa-trash"></i>
                 </div>
             </li>
             <li>
-                Roderick Bandallan
+                Mrs. Lorna Miro
                 <div class="icons">
                     <i class="fa fa-edit"></i>
                     <i class="fa fa-trash"></i>
                 </div>
             </li>
             <li>
-                Josephine Petralba
+                Mr. Geofrey Gudio
                 <div class="icons">
                     <i class="fa fa-edit"></i>
                     <i class="fa fa-trash"></i>

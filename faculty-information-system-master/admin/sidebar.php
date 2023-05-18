@@ -63,9 +63,9 @@
 		<a href="course.php"><li><i class="fa fa-graduation-cap"></i>Courses</li></a>
 		<a href="student.php"><li><i class="fa fa-users"></i>Students</li></a>
 		<a href="subject.php"><li><i class="fa fa-book"></i>Subjects</li></a>
-		<a href="userManagement.php"><li><i class="fa fa-users"></i>User Management</li></a>
-		<a href="faq.php"><li><i class="fa fa-users"></i>Faculty Management</li></a>
-		<a href="faq.php"><li><i class="fa fa-users"></i>Data Entry Management</li></a>
+		<a href="user_management.php"><li><i class="fa fa-users"></i>User Management</li></a>
+		<a href="faculty_management.php"><li><i class="fa fa-users"></i>Faculty Management</li></a>
+		<a href="data_entry_management.php"><li><i class="fa fa-users"></i>Data Entry Management</li></a>
 		<a href="faq.php"><li><i class="fa fa-users"></i>FAQ</li></a>
 		<!-- a href="settings.php"><li><i class="fa fa-cog"></i>Settings</li></a -->
 		<a href="includes/signout.php"><li><i class="fa fa-sign-out-alt"></i>Logout</li></a>
