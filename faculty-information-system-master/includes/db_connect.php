@@ -2,7 +2,7 @@
 
 $servername = "localhost";
 $username = "root";
-$password = "august212000";
+$password = "";
 $dbname = "fis";
 
 try {
