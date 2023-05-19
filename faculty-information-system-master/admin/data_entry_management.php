@@ -43,7 +43,7 @@ ob_start();
 
 
                     <div class="user-list">
-                        <label for="ftitle">All Department <i class="fa fa-plus"></i></label>
+                        <label for="ftitle">All Department <a href="add_department.php"><i class="fa fa-plus"></i></a></label>
 
                         <hr>
 
@@ -100,7 +100,8 @@ ob_start();
 
 
                     <div class="user-list">
-                        <label for="ftitle">All Courses <i class="fa fa-plus"></i></label>
+                        <label for="ftitle">All Courses <a href="add_course.php
+                        "><i class="fa fa-plus"></i></a></label>
 
                         <hr>
 
@@ -194,7 +195,7 @@ ob_start();
             <div class="row">
                 <div class="col-8">
                     <div class="user-list">
-                        <label for="ftitle">Books Publication <i class="fa fa-plus"></i></label>
+                        <label for="ftitle">Books Publication <a href="add_publication.php"><i class="fa fa-plus"></i> </a></label>
                         <hr>
                         <ul>
                             <li>
@@ -219,7 +220,7 @@ ob_start();
             <div class="row">
                 <div class="col-8">
                     <div class="user-list">
-                        <label for="ftitle">Job Type <i class="fa fa-plus"></i></label>
+                        <label for="ftitle">Job Type <a href="add_job.php"><i class="fa fa-plus"></i></a></label>
                         <hr>
                         <ul>
                             <li>
