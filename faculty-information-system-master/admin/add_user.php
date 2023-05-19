@@ -36,57 +36,37 @@ ob_start();
 
                     <div class="user-list">
 
-                        <h3 class="user-list-header">User List </h3><a href="add_user.php"><i class="fa fa-plus"> Add user</i></a>
+                        <h3 class="user-list-header">Add user section </h3>
+                        <a href="user_management.php">
+                            <li><i class="fa fa-arrow-right">Back </i></li>
+
+                        </a>
                         <hr>
+                        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
+                            <div class="row">
+                                <div class="col-8">
+                                    <label for="ftitle">Full name</label>
+                                    <input class="form-input" type="text" id="ftitle" name="ftitle" placeholder="..." maxlength="256" required>
 
-                        <ul>
-                            <li>
-                                Rolly Barinan
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                Christaian Verallo
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
+                                    <label for="username">Username</label>
+                                    <input class="form-input" type="text" id="username" name="username" placeholder="..." maxlength="256" required>
 
-                            <li>
-                                Denverth Larida
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
+                                    <label for="role">Role</label>
+                                    <select class="form-input" id="role" name="role" required>
+                                        <option value="admin">Admin</option>
+                                        <option value="user">faculty</option>
+                                        <option value="guest">Guest</option>
+                                        <option value="guest">students</option>
+                                    </select>
 
-                            <li>
-                                Lyle Tammara
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
+                                    <label for="default_password">Default password</label>
+                                    <input class="form-input" type="text" id="default_password" name="default_password" placeholder="..." maxlength="256" required>
                                 </div>
-                            </li>
-                            <li>
-                                Roderick Bandallan
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                Josephine Petralba
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
+                            </div>
 
-                        </ul>
-
+                            <input type="hidden" name="operation" value="add">
+                            <input class="btn" type="submit" name="submit" value="Add to Database">
+                        </form>
 
                     </div>
                     <!-- <label for="fdesc">FAQ Description *</label>
