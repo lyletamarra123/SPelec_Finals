@@ -51,7 +51,7 @@ ob_start();
                             <td>{$row['office_id']}</td>
                          
                             <td>
-                                <a href=\"edit_user.php?faculty_id={$row['faculty_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"update_faculty.php?faculty_id={$row['faculty_id']}\"><i class='fa fa-edit'></i></a>
                                 <a href=\"delete_faculty.php?faculty_id= {$row['faculty_id']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";

@@ -43,7 +43,7 @@ ob_start();
                             <td>{$row['password']}</td>
                             <td>{$row['role_id']}</td>
                             <td>
-                                <a href=\"edit_user.php?user_id={$row['user_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"update_user.php?user_id={$row['user_id']}\"><i class='fa fa-edit'></i></a>
                                 <a href=\"delete_user.php?user_id= {$row['user_id']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";
