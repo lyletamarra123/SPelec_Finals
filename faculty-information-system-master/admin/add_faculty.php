@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="box">
         <div class="col-8">
             <div class="user-list">
-                <h3 class="user-list-header">Add user section</h3>
+                <h3 class="user-list-header">Add Faculty Section</h3>
                 <a href="faculty_management.php">
                     <li><i class="fa fa-arrow-right">Back</i></li>
                 </a>

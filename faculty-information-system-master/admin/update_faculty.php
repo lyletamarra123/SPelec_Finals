@@ -155,3 +155,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         margin-bottom: 10px;
     }
 </style>
+
+<?php require('../footer.php') ?>

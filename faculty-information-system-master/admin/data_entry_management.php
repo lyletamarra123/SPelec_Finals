@@ -142,7 +142,7 @@ ob_start();
                      
                          
                             <td>
-                                <a href=\"edit_publication.php?publication_id={$row['publication_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"update_publication.php?publication_id={$row['publication_id']}\"><i class='fa fa-edit'></i></a>
                                 <a href=\"delete_publication.php?publication_id= {$row['publication_id']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";
@@ -186,7 +186,7 @@ ob_start();
                      
                          
                             <td>
-                                <a href=\"edit_user.php?job_type_id={$row['job_type_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"update_job.php?job_type_id={$row['job_type_id']}\"><i class='fa fa-edit'></i></a>
                                 <a href=\"delete_job.php?job_type_id= {$row['job_type_id']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";
@@ -234,7 +234,7 @@ ob_start();
                             <td>{$row['office_address']}</td>
                          
                             <td>
-                                <a href=\"edit_user.php?office_id={$row['office_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"update_office.php?office_id={$row['office_id']}\"><i class='fa fa-edit'></i></a>
                                 <a href=\"delete_office.php?office_id= {$row['office_id']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";
