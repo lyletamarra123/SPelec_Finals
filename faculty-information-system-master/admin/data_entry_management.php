@@ -47,8 +47,8 @@ ob_start();
                             <td>{$row['department_name']}</td>
                          
                             <td>
-                                <a href=\"edit_user.php?id={$row['department_id']}\"><i class='fa fa-edit'></i></a>
-                                <a href=\"delete_user.php?user_id= {$row['department_id']}\"><i class='fa fa-trash'></i></a>
+                                <a href=\"edit_user.php?department_id={$row['department_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"delete_department.php?department_id={$row['department_id']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";
                         }
@@ -187,8 +187,8 @@ ob_start();
                      
                          
                             <td>
-                                <a href=\"edit_user.php?id={$row['job_type_id']}\"><i class='fa fa-edit'></i></a>
-                                <a href=\"delete_user.php?user_id= {$row['job_type_id']}\"><i class='fa fa-trash'></i></a>
+                                <a href=\"edit_user.php?job_type_id={$row['job_type_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"delete_job.php?job_type_id= {$row['job_type_id']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";
                         }
@@ -209,7 +209,7 @@ ob_start();
             <div class="row">
                 <div class="col-10">
                     <div class="user-list">
-                        <label for="ftitle">Offices <a href="add_department.php"><i class="fa fa-plus"></i></a></label>
+                        <label for="ftitle">Offices <a href="add_office.php"><i class="fa fa-plus"></i></a></label>
 
 
                         <hr>
@@ -235,8 +235,8 @@ ob_start();
                             <td>{$row['office_address']}</td>
                          
                             <td>
-                                <a href=\"edit_user.php?id={$row['office_id']}\"><i class='fa fa-edit'></i></a>
-                                <a href=\"delete_user.php?user_id= {$row['office_id']}\"><i class='fa fa-trash'></i></a>
+                                <a href=\"edit_user.php?office_id={$row['office_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"delete_office.php?office_id= {$row['office_id']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";
                         }

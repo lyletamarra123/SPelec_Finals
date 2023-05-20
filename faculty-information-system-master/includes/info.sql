@@ -140,5 +140,5 @@ VALUES
     select * from courses;
 	select * from publication_types;
     select * from publications;
-  
+  DELETE FROM departments WHERE 1730235070 = ;
   DELETE FROM users WHERE user_id = 1166431053

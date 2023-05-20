@@ -6,8 +6,8 @@ if (isset($_SESSION['stno'])) {
 }
 include('sidebar.php');
 ob_start();
-$department_id = rand();
-$department_name = "";
+$office_id = rand();
+$office_address = "";
 ?>
 
 
@@ -16,22 +16,22 @@ $department_name = "";
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // $department_id = $_POST["department_id"] ?? "";
-        $department_name = $_POST["department_name"] ?? "";
+        $office_address = $_POST["office_address"] ?? "";
 
 
         // Generate a unique user ID
         // $userid = uniqid();
 
-        $sql = "INSERT INTO departments (department_id, department_name) VALUES (?, ?)";
+        $sql = "INSERT INTO offices (office_id, office_address) VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$department_id, $department_name]);
+        $stmt->execute([$office_id, $office_address]);
 
-        $successMessage = "Department Added Successfully";
+        $successMessage = "Office Added Successfully";
 
         // Clear user input
 
-        $department_id = rand();
-        $department_name = "";
+        $office_id = rand();
+        $office_address = "";
     }
     ?>
 
@@ -39,7 +39,7 @@ $department_name = "";
     <div class="row">
         <div class="col-8">
             <div class="user-list">
-                <h3 class="user-list-header">Add Department Section </h3>
+                <h3 class="user-list-header">Add Office Section </h3>
                 <a href="data_entry_management.php">
                     <li><i class="fa fa-arrow-right">Back </i></li>
                 </a>
@@ -57,8 +57,8 @@ $department_name = "";
                         <?php endif; ?>
                         <div class="col-8">
 
-                            <label for=" departmentName">Department Name</label>
-                            <input class="form-input" type="text" id="departmentName" name="department_name" placeholder="..." maxlength="256" required value="<?php echo $department_name; ?>">
+                            <label for=" Office Adress">Office Adress</label>
+                            <input class="form-input" type="text" id="office_address" name="office_address" placeholder="..." maxlength="256" required value="<?php echo $office_address; ?>">
                         </div>
                     </div>
 
