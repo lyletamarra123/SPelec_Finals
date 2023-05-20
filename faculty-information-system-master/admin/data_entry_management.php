@@ -21,11 +21,8 @@ ob_start();
             <div class="row">
                 <div class="col-10">
                     <div class="user-list">
-                        <label for="ftitle">All Department <a href="add_department.php"><i class="fa fa-plus"></i></a></label>
-
-
+                        <label for="ftitle">All Departments <a href="add_department.php"><i class="fa fa-plus"></i></a></label>
                         <hr>
-
                         <?php
                         $sql = "SELECT * FROM departments";
                         $result = $conn->query($sql);
@@ -47,7 +44,7 @@ ob_start();
                             <td>{$row['department_name']}</td>
                          
                             <td>
-                                <a href=\"edit_user.php?department_id={$row['department_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"update_department.php?department_id={$row['department_id']}\"><i class='fa fa-edit'></i></a>
                                 <a href=\"delete_department.php?department_id={$row['department_id']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";
