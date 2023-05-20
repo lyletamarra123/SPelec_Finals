@@ -1,147 +1,89 @@
-<?php require('header.php');
+<?php
+require('header.php');
+require_once('../includes/info_db_connect.php');
+
 if (isset($_SESSION['stno'])) {
 } else {
     header("Location: login.php");
 }
+
 include('sidebar.php');
 ob_start();
 ?>
 
-<div class='col-4'>
-
-    <?php
-    // if (isset($_POST['submit'])) {
-    //     if($_POST['operation'] === 'add'){
-    //         $sql="INSERT INTO faq (faqHeading,faqContent) VALUES (:ftitle,:fdesc)";
-    //         $stmt = $conn->prepare($sql);
-    //         $stmt->bindValue(':ftitle', $_POST['ftitle']);
-    //         $stmt->bindValue(':fdesc', $_POST['fdesc']);
-
-    //         if ($stmt->execute()) {
-    //             echo "<div class='alert success'>New FAQ added successfully</div>";
-    //             ob_start();
-    //         } else {
-    //             echo "<div class='alert info'>Error: " . $stmt->errorInfo()[2] . "</div>";
-    //         }
-    //     }elseif($_POST['operation'] === 'change'){
-
-    //     }
-    // }
-    ?>
-
+<div class='col-6' style="width: 50%;">
     <div class="box">
-        <form action=">" method="post">
+        <form action="" method="post">
             <div class="row">
-                <div class="col-8">
-
+                <div class="">
                     <div class="user-list">
-
-                        <h3 class="user-list-header">User List </h3><a href="add_user.php"><i class="fa fa-plus"> Add user</i></a>
+                        <h3 class="user-list-header">User List</h3>
+                        <a href="add_user.php"><i class="fa fa-plus"> Add user</i></a>
                         <hr>
-
-                        <ul>
-                            <li>
-                                Rolly Barinan
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                Christaian Verallo
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-
-                            <li>
-                                Denverth Larida
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-
-                            <li>
-                                Lyle Tammara
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                Roderick Bandallan
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                Josephine Petralba
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-
-                        </ul>
-
-
+                        <?php
+                        $sql = "SELECT * FROM User";
+                        $result = $conn->query($sql);
+                        if (!$result) {
+                            die("Invalid Query: " . $conn->errorInfo()[2]);
+                        }
+                        echo "<table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>";
+                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<tr>
+                            <td>{$row['userid']}</td>
+                            <td>{$row['fullname']}</td>
+                            <td>{$row['username']}</td>
+                            <td>{$row['email']}</td>
+                            <td>{$row['role']}</td>
+                            <td>
+                                <a href=\"edit_user.php?id={$row['userid']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"delete_user.php?userid={$row['userid']}\"><i class='fa fa-trash'></i></a>
+                            </td>
+                        </tr>";
+                    }
+                    echo "</table>";
+                        ?>
                     </div>
-                    <!-- <label for="fdesc">FAQ Description *</label>
-                    <textarea rows="10" class='form-input' id="fdesc" name="fdesc" placeholder="..." required></textarea> -->
                 </div>
             </div>
-            <!-- <input type="hidden" name='operation' value='add'> -->
-            <!-- <input class="btn" type="submit" name="submit" value="Add to database"> -->
         </form>
     </div>
 </div>
 
+
 <style>
     .user-list {
-        border: 1px solid #ccc;
         padding: 10px;
         width: 100%;
         background-color: #f7f7f7;
     }
 
-    .user-list ul {
-        list-style-type: none;
-        padding: 0;
+    .user-list table {
+        width: 100%;
+        border-collapse: collapse;
     }
 
-    .user-list li {
+    .user-list th,
+    .user-list td {
+        padding: 8px;
         border-bottom: 1px solid #ccc;
-        padding: 5px 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        text-align: left;
     }
 
-    .icons {
-        display: flex;
-        gap: 10px;
-    }
-
-    .icons:last-child {
-        margin-left: auto;
-    }
-
-    .icon {
-        display: flex;
-        align-items: flex-end;
-
+    .user-list th {
+        background-color: #f2f2f2;
     }
 
     .user-list-header {
         margin-right: 10px;
     }
-
-    .box {
-        padding-bottom: 30%;
-    }
 </style>
-<script src="../js/tab.js"></script>
+<script ></script>
 <?php require('../footer.php') ?>
