@@ -1,117 +1,120 @@
-<?php require('header.php');
-if (isset($_SESSION['stno'])) {
-} else {
+<?php
+require('header.php');
+require_once('../includes/info_db_connect.php');
+
+// Check if the user is logged in
+if (!isset($_SESSION['stno'])) {
     header("Location: login.php");
+    exit;
 }
+
 include('sidebar.php');
 ob_start();
+
+$publication_id = rand();
+$faculty_id = "";
+$title = "";
+$author = "";
+$publication_type_id = "";
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $faculty_id = $_POST["faculty_id"] ?? "";
+    $title = $_POST["title"] ?? "";
+    $author = $_POST["author"] ?? "";
+    $publication_type_id = $_POST["publication_type_id"] ?? "";
+
+
+    $sql = "INSERT INTO publications (publication_id, faculty_id, title, author, publication_type_id) VALUES (?,?,?,?,?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$publication_id, $faculty_id, $title, $author, $publication_type_id]);
+
+    $successMessage = "Course  Added Successfully";
+
+    $publication_id = rand();
+    $faculty_id = "";
+    $title = "";
+    $author = "";
+    $publication_type_id = "";
+}
 ?>
-
 <div class='col-4'>
-
-    <?php
-    // if (isset($_POST['submit'])) {
-    //     if($_POST['operation'] === 'add'){
-    //         $sql="INSERT INTO faq (faqHeading,faqContent) VALUES (:ftitle,:fdesc)";
-    //         $stmt = $conn->prepare($sql);
-    //         $stmt->bindValue(':ftitle', $_POST['ftitle']);
-    //         $stmt->bindValue(':fdesc', $_POST['fdesc']);
-
-    //         if ($stmt->execute()) {
-    //             echo "<div class='alert success'>New FAQ added successfully</div>";
-    //             ob_start();
-    //         } else {
-    //             echo "<div class='alert info'>Error: " . $stmt->errorInfo()[2] . "</div>";
-    //         }
-    //     }elseif($_POST['operation'] === 'change'){
-
-    //     }
-    // }
-    ?>
-
     <div class="box">
-        <form action=">" method="post">
-            <div class="row">
-                <div class="col-8">
+        <div class="col-8">
+            <div class="user-list">
+                <h3 class="user-list-header">Add publication section</h3>
+                <a href="data_entry_management.php">
+                    <li><i class="fa fa-arrow-right">Back</i></li>
+                </a>
+                <hr>
+                <?php if (!empty($successMessage)) : ?>
+                    <div class="success-message"><?php echo $successMessage; ?></div>
+                    <script>
+                        setTimeout(function() {
+                            var successMessage = document.querySelector('.success-message');
+                            successMessage.style.display = 'none';
+                        }, 2000);
+                    </script>
+                <?php endif; ?>
+                <form method="post">
+                    <div class="row">
+                        <div class="col-8">
+                     
+                            <label for="faculty_id">faculty</label>
+                            <select class="form-input" id="faculty_id" name="faculty_id" required>
+                                <?php
+                                $sql = " SELECT faculty_id,last_name,first_name FROM faculty";
+                                $result = $conn->query($sql);
+                                if ($result) {
+                                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                                        $faculty_id = $row['faculty_id'];
+                                        $fname = $row['first_name'];
+                                        $lname = $row['last_name'];
+                                        $selected = ($faculty_id == $faculty_id) ? 'selected' : '';
+                                        echo "<option value=\"$faculty_id\" $selected>$lname,  $fname  </option>";
+                                    }
+                                }
+                                ?>
+                            </select>
+                            <label for="title">title</label>
+                            <input class="form-input" type="text" id="title" name="title" placeholder="..." maxlength="256" required value="<?php echo $title; ?>">
 
-                    <div class="user-list">
+                            <label for="author">author</label>
+                            <input class="form-input" type="text" id="author" name="author" placeholder="..." maxlength="256" required value="<?php echo $author; ?>">
 
-                        <h3 class="user-list-header">Add Publication Section </h3>
-                        <a href="data_entry_management.php">
-                            <li><i class="fa fa-arrow-right">Back </i></li>
-                        </a>
-                        <hr>
-                        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
-                            <div class="row">
-                                <div class="col-8">
-                                    <label for="publicationID">Publication ID</label>
-                                    <input class="form-input" type="text" id="publicationID" name="publicationID" placeholder="..." maxlength="256" required>
-
-                                    <label for="publicationName">Publication Name</label>
-                                    <input class="form-input" type="text" id="publicationName" name="publicationName" placeholder="..." maxlength="256" required>
-
-                                    <label for="publicationContent">Publication Content</label>
-                                    <textarea rows="10" class="form-input" id="publicationContent" name="publicationContent" placeholder="..." required></textarea>
-                                </div>
-                            </div>
-
-                            <input type="hidden" name="operation" value="add">
-                            <input class="btn" type="submit" name="submit" value="Add to Database">
-                        </form>
+                            <label for="publication_type_id">publication Type</label>
+                            <select class="form-input" id="publication_type_id" name="publication_type_id" required>
+                                <?php
+                                $sql = "SELECT publication_type_id,publication_type_name FROM publication_types";
+                                $result = $conn->query($sql);
+                                if ($result) {
+                                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                                        $publication_type_id = $row['publication_type_id'];
+                                        $publication_type_name = $row['publication_type_name'];
+                                     
+                                        $selected = ($publication_type_id == $publication_type_id) ? 'selected' : '';
+                                        echo "<option value=\"$publication_type_id\" $selected>  $publication_type_name  </option>";
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
                     </div>
-                    <!-- <label for="fdesc">FAQ Description *</label>
-                    <textarea rows="10" class='form-input' id="fdesc" name="fdesc" placeholder="..." required></textarea> -->
-                </div>
+                    <input class="btn" type="submit" name="submit" value="Add Publication  ">
+                    <a href="data_entry_management.php">CANCEL</a>
+                </form>
             </div>
-            <!-- <input type="hidden" name='operation' value='add'> -->
-            <!-- <input class="btn" type="submit" name="submit" value="Add to database"> -->
-        </form>
+        </div>
     </div>
 </div>
 
 <style>
-    .user-list {
-        border: 1px solid #ccc;
-        padding: 10px;
-        width: 100%;
-        background-color: #f7f7f7;
-    }
+    /* Rest of your CSS code */
 
-    .user-list ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    .user-list li {
-        border-bottom: 1px solid #ccc;
-        padding: 5px 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .icons {
-        display: flex;
-        gap: 10px;
-    }
-
-    .icons:last-child {
-        margin-left: auto;
-    }
-
-    .icon {
-        display: flex;
-        align-items: flex-end;
-
-    }
-
-    .user-list-header {
-        margin-right: 10px;
-    }
-
-    .box {
-        padding-bottom: 30%;
+    .success-message {
+        color: green;
+        font-weight: bold;
+        margin-bottom: 10px;
     }
 </style>
-<script src="../js/tab.js"></script>
+
 <?php require('../footer.php') ?>

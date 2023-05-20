@@ -125,7 +125,8 @@ ob_start();
                         echo "<table>
                         <tr>
                             <th>Publication ID</th>
-                            <th>Title ID</th>
+                            <th>Faculty ID</th>
+                            <th>Title </th>
                             <th>Author </th>
                             <th>Publication Type </th>
                             <th>Action</th>
@@ -136,6 +137,7 @@ ob_start();
 
                             echo "<tr>
                             <td>{$row['publication_id']}</td>
+                            <td>{$row['faculty_id']}</td>
                             <td>{$row['title']}</td>
                             <td>{$row['author']}</td>
                             <td>{$row['publication_type_id']}</td>
@@ -143,8 +145,8 @@ ob_start();
                      
                          
                             <td>
-                                <a href=\"edit_user.php?id={$row['publication_id']}\"><i class='fa fa-edit'></i></a>
-                                <a href=\"delete_user.php?user_id= {$row['publication_id']}\"><i class='fa fa-trash'></i></a>
+                                <a href=\"edit_publication.php?publication_id={$row['publication_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"delete_publication.php?publication_id= {$row['publication_id']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";
                         }
