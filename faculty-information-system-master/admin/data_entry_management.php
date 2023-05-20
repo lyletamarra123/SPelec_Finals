@@ -96,8 +96,8 @@ ob_start();
                      
                          
                             <td>
-                                <a href=\"edit_user.php?id={$row['course_id']}\"><i class='fa fa-edit'></i></a>
-                                <a href=\"delete_user.php?user_id= {$row['course_id']}\"><i class='fa fa-trash'></i></a>
+                                <a href=\"edit_user.php?course_id={$row['course_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"delete_course.php?course_id= {$row['course_id']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";
                         }
