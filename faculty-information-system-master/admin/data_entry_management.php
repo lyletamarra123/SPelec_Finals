@@ -11,7 +11,7 @@ ob_start();
 <div class='col-4'>
     <div class="tab center">
         <button class="tablinks" onclick="openTab(event, 'Add')" id="defaultOpen">Department</button>
-        <button class="tablinks" onclick="openTab(event, 'Course')">Courses Offerd</button>
+        <button class="tablinks" onclick="openTab(event, 'Course')">Courses Offered</button>
         <button class="tablinks" onclick="openTab(event, 'Publication')">Publication </button>
         <button class="tablinks" onclick="openTab(event, 'Jobs')">Jobs </button>
         <button class="tablinks" onclick="openTab(event, 'Offices')">Offices </button>
@@ -93,7 +93,7 @@ ob_start();
                      
                          
                             <td>
-                                <a href=\"edit_user.php?course_id={$row['course_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"update_course.php?course_id={$row['course_id']}\"><i class='fa fa-edit'></i></a>
                                 <a href=\"delete_course.php?course_id= {$row['course_id']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";
