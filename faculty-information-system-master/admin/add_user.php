@@ -10,36 +10,31 @@ if (!isset($_SESSION['stno'])) {
 
 include('sidebar.php');
 ob_start();
-
-$fullname = "";
+$user_id = rand();
 $username = "";
-$address = "";
-$email = "";
-$role = "";
+$password = "";
+$role_id = "";
 $successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    $fullname = $_POST["fullname"];
-    $username = $_POST["username"];
-    $email = $_POST["email"];
-    $address = $_POST["address"];
-    $role = $_POST["role"];
+    $username = $_POST["username"] ?? "";
+    $password = $_POST["password"] ?? "";
+    $role_id = $_POST["role_id"] ?? "";
 
     // Generate a unique user ID
-    $userid = rand();
+    // $userid = uniqid();
 
-    $sql = "INSERT INTO User (userid, fullname, username, email, address, role) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO users (user_id, username, password, role_id) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$userid, $fullname, $username, $email, $address, $role]);
+    $stmt->execute([$user_id, $username, $password, $role_id]);
 
     $successMessage = "User Added Successfully";
+
     // Clear user input
-    $fullname = "";
+    $user_id= rand();
     $username = "";
-    $email = "";
-    $address = "";
-    $role = "";
+    $password = "";
+    $role_id = "";
 }
 ?>
 <div class='col-4'>
@@ -53,28 +48,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <hr>
                 <?php if (!empty($successMessage)): ?>
                     <div class="success-message"><?php echo $successMessage; ?></div>
+                    <script>
+                        setTimeout(function() {
+                            var successMessage = document.querySelector('.success-message');
+                            successMessage.style.display = 'none';
+                        }, 2000);
+                    </script>
                 <?php endif; ?>
                 <form method="post">
                     <div class="row">
                         <div class="col-8">
-                            <label for="fullname">Full Name</label>
-                            <input class="form-input" type="text" id="fullname" name="fullname" placeholder="..." maxlength="256" required value="<?php echo $fullname; ?>">
-
                             <label for="username">Username</label>
                             <input class="form-input" type="text" id="username" name="username" placeholder="..." maxlength="256" required value="<?php echo $username; ?>">
 
-                            <label for="email">Email</label>
-                            <input class="form-input" type="text" id="email" name="email" placeholder="..." maxlength="256" required value="<?php echo $email; ?>">
-
-                            <label for="address">Address</label>
-                            <input class="form-input" type="text" id="address" name="address" placeholder="..." maxlength="256" required value="<?php echo $address; ?>">
+                            <label for="password">Password</label>
+                            <input class="form-input" type="password" id="password" name="password" placeholder="..." maxlength="256" required value="<?php echo $password; ?>">
                             
                             <label for="role">Role</label>
-                            <select class="form-input" id="role" name="role" required>
-                                <option value="admin" <?php if ($role == 'admin') echo 'selected'; ?>>Admin</option>
-                                <option value="faculty" <?php if ($role == 'faculty') echo 'selected'; ?>>Faculty</option>
-                                <option value="guest" <?php if ($role == 'guest') echo 'selected'; ?>>Guest</option>
-                                <option value="students" <?php if ($role == 'students') echo 'selected'; ?>>Students</option>
+                            <select class="form-input" id="role" name="role_id" required>
+                                <option value="1" <?php if ($role_id == 1) echo 'selected'; ?>>Admin</option>
+                                <option value="2" <?php if ($role_id == 2) echo 'selected'; ?>>Faculty</option>
+                                <option value="3" <?php if ($role_id == 3) echo 'selected'; ?>>Guest</option>
+                                <option value="4" <?php if ($role_id == 4) echo 'selected'; ?>>Students</option>
                             </select>
                         </div>
                     </div>
@@ -96,6 +91,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 </style>
 
-<!-- Rest of your HTML code -->
-<script src="../js/tab.js"></script>
 <?php require('../footer.php') ?>

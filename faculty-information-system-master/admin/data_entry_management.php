@@ -1,4 +1,5 @@
 <?php require('header.php');
+require_once('../includes/info_db_connect.php');
 if (isset($_SESSION['stno'])) {
 } else {
     header("Location: login.php");
@@ -8,282 +9,250 @@ ob_start();
 ?>
 
 <div class='col-4'>
-
-    <?php
-    if (isset($_POST['submit'])) {
-        if ($_POST['operation'] === 'add') {
-            $sql = "INSERT INTO faq (faqHeading,faqContent) VALUES (:ftitle,:fdesc)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindValue(':ftitle', $_POST['ftitle']);
-            $stmt->bindValue(':fdesc', $_POST['fdesc']);
-
-            if ($stmt->execute()) {
-                echo "<div class='alert success'>New FAQ added successfully</div>";
-                ob_start();
-            } else {
-                echo "<div class='alert info'>Error: " . $stmt->errorInfo()[2] . "</div>";
-            }
-        } elseif ($_POST['operation'] === 'change') {
-        }
-    }
-    ?>
-
     <div class="tab center">
         <button class="tablinks" onclick="openTab(event, 'Add')" id="defaultOpen">Department</button>
         <button class="tablinks" onclick="openTab(event, 'Course')">Courses Offerd</button>
         <button class="tablinks" onclick="openTab(event, 'Publication')">Publication </button>
         <button class="tablinks" onclick="openTab(event, 'Jobs')">Jobs </button>
-
+        <button class="tablinks" onclick="openTab(event, 'Offices')">Offices </button>
     </div>
-
     <div id="Add" class="tabcontent">
         <form action=">" method="post">
             <div class="row">
-                <div class="col-8">
-
-
+                <div class="col-10">
                     <div class="user-list">
                         <label for="ftitle">All Department <a href="add_department.php"><i class="fa fa-plus"></i></a></label>
 
+
                         <hr>
 
-                        <ul>
-                            <li>
-                                School of Arts and Sciences
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                School of Business and Management
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
+                        <?php
+                        $sql = "SELECT * FROM departments";
+                        $result = $conn->query($sql);
+                        if (!$result) {
+                            die("Invalid Query: " . $conn->errorInfo()[2]);
+                        }
+                        echo "<table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Department</th>
+                            <th>Action</th>
+                      
+                        </tr>";
 
-                            <li>
-                                School of Computer Studies
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
+                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
 
-                            <li>
-                                School of Engineering
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
+                            echo "<tr>
+                            <td>{$row['department_id']}</td>
+                            <td>{$row['department_name']}</td>
+                         
+                            <td>
+                                <a href=\"edit_user.php?id={$row['department_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"delete_user.php?user_id= {$row['department_id']}\"><i class='fa fa-trash'></i></a>
+                            </td>
+                        </tr>";
+                        }
 
-
-                        </ul>
+                        echo "</table>";
+                        ?>
 
                     </div>
-
-                    <!-- <label for="fdesc">FAQ Description *</label>
-                    <textarea rows="10" class='form-input' id="fdesc" name="fdesc" placeholder="..." required></textarea> -->
                 </div>
             </div>
-            <!-- <input type="hidden" name='operation' value='add'> -->
-            <!-- <input class="btn" type="submit" name="submit" value="Add to Database"> -->
+
         </form>
     </div>
 
     <div id="Course" class="tabcontent">
         <form action=">" method="post">
             <div class="row">
-                <div class="col-8">
-
-
+                <div class="col-10">
                     <div class="user-list">
                         <label for="ftitle">All Courses <a href="add_course.php
                         "><i class="fa fa-plus"></i></a></label>
 
                         <hr>
+                        <?php
+                        $sql = "SELECT * FROM courses";
+                        $result = $conn->query($sql);
+                        if (!$result) {
+                            die("Invalid Query: " . $conn->errorInfo()[2]);
+                        }
+                        echo "<table>
+                        <tr>
+                            <th>Department ID</th>
+                            <th>course ID</th>
+                            <th>Course Name</th>
+                            <th>Action</th>
+                      
+                        </tr>";
 
-                        <ul>
-                            <li>
-                                BA in COMMUNICATION
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                BA in MARKETING COMMUNICATION
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
+                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
 
-                            <li>
-                                BA in JOURNALISM
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-
-                            <li>
-                                BA in ENGLISH LANGUAGE STUDIES
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                BS in ACCOUNTANCY
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                BS in MANAGEMENT ACCOUNTING
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                BS COMPUTER SCIENCE
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-
-                            <li>
-                                BS INFORMATION SYSTEMS
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-
-
-                            </li>
-                            <li>
-                                BS INFORMATION TECHNOLOGY
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-
-
-
-                        </ul>
-
+                            echo "<tr>
+                            <td>{$row['department_id']}</td>
+                            <td>{$row['course_id']}</td>
+                            <td>{$row['course_name']}</td>
+                     
+                         
+                            <td>
+                                <a href=\"edit_user.php?id={$row['course_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"delete_user.php?user_id= {$row['course_id']}\"><i class='fa fa-trash'></i></a>
+                            </td>
+                        </tr>";
+                        }
+                        echo "</table>";
+                        ?>
                     </div>
-
-                    <!-- <label for="fdesc">FAQ Description *</label>
-                    <textarea rows="10" class='form-input' id="fdesc" name="fdesc" placeholder="..." required></textarea> -->
                 </div>
             </div>
-            <!-- <input type="hidden" name='operation' value='add'>
-            <input class="btn" type="submit" name="submit" value="Add to Database"> -->
         </form>
     </div>
 
     <div id="Publication" class="tabcontent">
         <form action=">" method="post">
             <div class="row">
-                <div class="col-8">
+                <div class="col-12">
                     <div class="user-list">
                         <label for="ftitle">Books Publication <a href="add_publication.php"><i class="fa fa-plus"></i> </a></label>
                         <hr>
-                        <ul>
-                            <li>
-                                FORWARD
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                        </ul>
+                        <?php
+                        $sql = "SELECT * FROM publications";
+                        $result = $conn->query($sql);
+                        if (!$result) {
+                            die("Invalid Query: " . $conn->errorInfo()[2]);
+                        }
+                        echo "<table>
+                        <tr>
+                            <th>Publication ID</th>
+                            <th>Title ID</th>
+                            <th>Author </th>
+                            <th>Publication Type </th>
+                            <th>Action</th>
+                      
+                        </tr>";
+
+                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+
+                            echo "<tr>
+                            <td>{$row['publication_id']}</td>
+                            <td>{$row['title']}</td>
+                            <td>{$row['author']}</td>
+                            <td>{$row['publication_type_id']}</td>
+                      
+                     
+                         
+                            <td>
+                                <a href=\"edit_user.php?id={$row['publication_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"delete_user.php?user_id= {$row['publication_id']}\"><i class='fa fa-trash'></i></a>
+                            </td>
+                        </tr>";
+                        }
+                        echo "</table>";
+                        ?>
                     </div>
-                    <!-- <label for="fdesc">FAQ Description *</label>
-                    <textarea rows="10" class='form-input' id="fdesc" name="fdesc" placeholder="..." required></textarea> -->
+                 
                 </div>
             </div>
-            <!-- <input type="hidden" name='operation' value='add'> -->
-            <!-- <input class="btn" type="submit" name="submit" value="Add to database"> -->
+
         </form>
     </div>
     <div id="Jobs" class="tabcontent">
         <form action=">" method="post">
             <div class="row">
-                <div class="col-8">
+                <div class="col-12">
                     <div class="user-list">
                         <label for="ftitle">Job Type <a href="add_job.php"><i class="fa fa-plus"></i></a></label>
                         <hr>
-                        <ul>
-                            <li>
-                                Professor
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                Associate Professor
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                Assistant Professor
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                Lecturer
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                            <li>
-                                Adjunct Professor
-                                <div class="icons">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-trash"></i>
-                                </div>
-                            </li>
-                        </ul>
+                        <?php
+                        $sql = "SELECT * FROM job_types";
+                        $result = $conn->query($sql);
+                        if (!$result) {
+                            die("Invalid Query: " . $conn->errorInfo()[2]);
+                        }
+                        echo "<table>
+                        <tr>
+                            <th>Job ID</th>
+                            <th>Job Type ID</th>
+                            <th>Action</th>
+                      
+                        </tr>";
+
+                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+
+                            echo "<tr>
+                            <td>{$row['job_type_id']}</td>
+                            <td>{$row['job_type_name']}</td>
+                         
+                     
+                         
+                            <td>
+                                <a href=\"edit_user.php?id={$row['job_type_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"delete_user.php?user_id= {$row['job_type_id']}\"><i class='fa fa-trash'></i></a>
+                            </td>
+                        </tr>";
+                        }
+                        echo "</table>";
+                        ?>  
+                      
                     </div>
-                    <!-- <label for="fdesc">FAQ Description *</label>
-                    <textarea rows="10" class='form-input' id="fdesc" name="fdesc" placeholder="..." required></textarea> -->
+                   
                 </div>
             </div>
-            <!-- <input type="hidden" name='operation' value='add'> -->
-            <!-- <input class="btn" type="submit" name="submit" value="Add to Database"> -->
+           
         </form>
 
     </div>
 
+    <div id="Offices" class="tabcontent">
+        <form action=">" method="post">
+            <div class="row">
+                <div class="col-10">
+                    <div class="user-list">
+                        <label for="ftitle">Offices <a href="add_department.php"><i class="fa fa-plus"></i></a></label>
+
+
+                        <hr>
+
+                        <?php
+                        $sql = "SELECT * FROM offices";
+                        $result = $conn->query($sql);
+                        if (!$result) {
+                            die("Invalid Query: " . $conn->errorInfo()[2]);
+                        }
+                        echo "<table>
+                        <tr>
+                            <th>Offices ID</th>
+                            <th>Address</th>
+                            <th>Action</th>
+                      
+                        </tr>";
+
+                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+
+                            echo "<tr>
+                            <td>{$row['office_id']}</td>
+                            <td>{$row['office_address']}</td>
+                         
+                            <td>
+                                <a href=\"edit_user.php?id={$row['office_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"delete_user.php?user_id= {$row['office_id']}\"><i class='fa fa-trash'></i></a>
+                            </td>
+                        </tr>";
+                        }
+
+                        echo "</table>";
+                        ?>
+
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
 </div>
 
-<!-- <div class="col-2 notice">
-    <h2><i class='fa fa-question-circle'></i> Notice</h2>
-    <p>Please check twice before you submit.</p>
-    <h2><i class="fa fa-link"></i> Quick Links</h2>
-    <p>
-    <ul>
-        <li><a href="student.php">Add New Student</a></li>
-        <li><a href="subject.php">Add New Subject</a></li>
-        <li><a href="course.php">Add New Course</a></li>
-    </ul>
-    </p>
-</div> -->
 
 <style>
     .user-list {

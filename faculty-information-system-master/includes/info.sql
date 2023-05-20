@@ -141,3 +141,4 @@ VALUES
 	select * from publication_types;
     select * from publications;
   
+  DELETE FROM users WHERE user_id = 1166431053

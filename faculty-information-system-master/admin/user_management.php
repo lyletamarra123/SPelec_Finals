@@ -13,7 +13,7 @@ ob_start();
 
 <div class='col-6' style="width: 50%;">
     <div class="box">
-        <form action="" method="post">
+        <form action="" method="post">  
             <div class="row">
                 <div class="">
                     <div class="user-list">
@@ -21,33 +21,34 @@ ob_start();
                         <a href="add_user.php"><i class="fa fa-plus"> Add user</i></a>
                         <hr>
                         <?php
-                        $sql = "SELECT * FROM User";
+                        $sql = "SELECT * FROM users";
                         $result = $conn->query($sql);
                         if (!$result) {
                             die("Invalid Query: " . $conn->errorInfo()[2]);
                         }
                         echo "<table>
                         <tr>
-                            <th>ID</th>
-                            <th>Full Name</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Action</th>
+                            <th>user_id</th>
+                            <th>username</th>
+                            <th>password</th>
+                            <th>role_id</th>
+                            <th>action</th>
                         </tr>";
+                    
                     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                        
                         echo "<tr>
-                            <td>{$row['userid']}</td>
-                            <td>{$row['fullname']}</td>
+                            <td>{$row['user_id']}</td>
                             <td>{$row['username']}</td>
-                            <td>{$row['email']}</td>
-                            <td>{$row['role']}</td>
+                            <td>{$row['password']}</td>
+                            <td>{$row['role_id']}</td>
                             <td>
-                                <a href=\"edit_user.php?id={$row['userid']}\"><i class='fa fa-edit'></i></a>
-                                <a href=\"delete_user.php?userid={$row['userid']}\"><i class='fa fa-trash'></i></a>
+                                <a href=\"edit_user.php?id={$row['user_id']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"delete_user.php?user_id= {$row['user_id']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";
                     }
+                    
                     echo "</table>";
                         ?>
                     </div>
