@@ -21,6 +21,7 @@ if(isset($_POST['submit'])){
 
         if($resulCheck == 0){
             header("Location: ../?error=missing");
+            header("Location: ../index.php");
             exit();
         }else{
             if($row){
@@ -40,7 +41,7 @@ if(isset($_POST['submit'])){
     }
 
 }else {
-    header("Location: ../");
+    header("Location: ../index.php");
     exit();
 }
 ?>

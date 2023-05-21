@@ -18,6 +18,7 @@ if(isset($_POST['submit'])){
 
 		if($resulCheck == 0){
 			header("Location: ../?error=missing");
+			header("Location: ../index.php");
 			exit();
 		}else{
 			if($row = $stmt->fetch(PDO::FETCH_ASSOC)){

@@ -12,6 +12,7 @@
 			<li>Degrees Earned by faculty members</li>
 			<li>Grants/Awards given to faculty members</li>
 			<li>Courses Taught by faculty members</li>
+			<li>School Departments</li>
 		</ul>
 		</p>
 	</div>
