@@ -9,43 +9,16 @@ if(isset($_SESSION['stno'])){
 include('sidebar.php');
 ?>
 <div class="row">
-    <div class="col-4 center">
-        <?php 
-        $stmt = $conn->query("SELECT COUNT(*) as cstotal FROM course");
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo "<div class='card-panel courses'><i class='fa fa-graduation-cap'></i><h2>";
-        echo $data['cstotal'];
-        echo "</h2>Courses</div>";
-
-        $stmt = $conn->query("SELECT COUNT(*) as sttotal FROM student");
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo "<div class='card-panel students'><i class='fa fa-users'></i><h2>";
-        echo $data['sttotal'];
-        echo "</h2>Students</div>";
-
-        $stmt = $conn->query("SELECT COUNT(*) as sutotal FROM subject");
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo "<div class='card-panel subjects'><i class='fa fa-book'></i><h2>";
-        echo $data['sutotal'];
-        echo "</h2>Subjects</div>";
-
-        $stmt = $conn->query("SELECT COUNT(*) as faqtotal FROM faq");
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo "<div class='card-panel faqs'><i class='fa fa-question-circle'></i><h2>";
-        echo $data['faqtotal'];
-        echo "</h2>FAQS</div>";
-        ?>
+    <div class="col-2">
+        <h2>Welcom Admin</h2>
+        <p>Please contact web master immediately if anything went wrong.<br>
+        <br>
+        Email : <a href="mailto:webmaster@kln.ac.lk">webmasterlyle&rolly@gmail.com</a>
+        <br>
+        Tel : 033 22990901
+        <br>
+        Fax : 033 22990904</p>
     </div>
-<div class="col-2">
-    <h2>Special Notice</h2>
-    <p>Please contact web master immediately if anything went wrong.<br>
-    <br>
-    Email : <a href="mailto:webmaster@kln.ac.lk">webmaster@kln.ac.lk</a>
-    <br>
-    Tel : 033 22990901
-    <br>
-    Fax : 033 22990904</p>
-</div>
 </div>
 <style>
     .row button{

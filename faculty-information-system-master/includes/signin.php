@@ -31,9 +31,6 @@ if(isset($_POST['submit'])){
                     exit();
                 }else{
                     $_SESSION['sno'] = $row['StudentNo'];
-                    $_SESSION['sname'] = $row['StudentName'];
-                    $_SESSION['cid'] = $row['CourseId'];
-                    $_SESSION['ayear'] = $row['AcYear'];
                     header("Location: ../home.php");
                 }
             }
