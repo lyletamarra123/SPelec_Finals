@@ -43,16 +43,17 @@
 		<input type="text" id="searchBar" oninput="getSubjects(this.value)" placeholder="Search with Course Code or Name" title="Type in a name">
 		<table id="subjectList">
 		<?php 
-			$sql = "SELECT * FROM subject WHERE CourseId='".$_SESSION['cid']."' ORDER BY RAND() LIMIT 5";
-			$result = mysqli_query($conn, $sql);
-			$resulCheck = mysqli_num_rows($result);
+			$sql = "SELECT * FROM subject WHERE CourseId=:cid ORDER BY RAND() LIMIT 5";
+			$stmt = $conn->prepare($sql);
+			$stmt->execute(['cid' => $_SESSION['cid']]);
+			$result = $stmt->fetchAll();
+			$resulCheck = count($result);
 			if($resulCheck>0){
-				while($row = mysqli_fetch_array($result))
-				{
-				echo "<tr>";
-				echo "<td>" . $row['SubjectCode'] . "</td>";
-				echo "<td>" . $row['SubjectName'] . "<i class='fa fa-file-download'></i>";
-				echo "</td></tr>";
+				foreach ($result as $row) {
+					echo "<tr>";
+					echo "<td>" . $row['SubjectCode'] . "</td>";
+					echo "<td>" . $row['SubjectName'] . "<i class='fa fa-file-download'></i>";
+					echo "</td></tr>";
 				}
 			}
 		?>

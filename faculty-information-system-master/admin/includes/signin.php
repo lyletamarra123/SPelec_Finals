@@ -4,24 +4,26 @@ include_once '../../includes/db_connect.php';
 
 if(isset($_POST['submit'])){
 	
-	$stno = mysqli_real_escape_string($conn,$_POST['stno']);
-	$pwd = mysqli_real_escape_string($conn,$_POST['pwd']);
+	$stno = $_POST['stno'];
+	$pwd = $_POST['pwd'];
 
 	if(empty($stno) || empty($pwd)){
 		header("Location: ../?error=empty");
 		exit();
 	}else{
-		$sql = "SELECT * FROM staff WHERE StaffNo='$stno'";
-		$result = mysqli_query($conn, $sql);
-		$resulCheck = mysqli_num_rows($result);
+		$sql = "SELECT * FROM staff WHERE StaffNo=:stno";
+		$stmt = $conn->prepare($sql);
+		$stmt->execute(array(':stno' => $stno));
+		$resulCheck = $stmt->rowCount();
 
 		if($resulCheck == 0){
 			header("Location: ../?error=missing");
+			header("Location: ../index.php");
 			exit();
 		}else{
-			if($row = mysqli_fetch_assoc($result)){
+			if($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 				$pwdCheck = $row['Password'];
-				if($pwdCheck!=$pwd){
+				if($pwdCheck != $pwd){
 					header("Location: ../?error=wrong");
 					exit();
 				}else{
@@ -37,5 +39,4 @@ if(isset($_POST['submit'])){
 	header("Location: ../?error=access_denied");
 	exit();
 }
-
 ?>

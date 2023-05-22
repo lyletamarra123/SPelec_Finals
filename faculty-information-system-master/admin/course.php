@@ -1,28 +1,34 @@
-<?php require('header.php');
-    if(isset($_SESSION['stno'])){
-    }else{
-        header("Location: login.php");
-    }
-    include('sidebar.php');
-?>
+<?php 
+require('header.php');
 
+if(isset($_SESSION['stno'])){
+}else{
+    header("Location: login.php");
+}
+
+include('sidebar.php');
+?>
 <div class='col-4'>
+    <?php
+        if (isset($_POST['submit'])) {
+            if($_POST['operation'] === 'add'){
+                $sql="INSERT INTO course VALUES (:coid, :coname, 0, :codesc)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':coid', $_POST['coid']);
+                $stmt->bindParam(':coname', $_POST['coname']);
+                $stmt->bindParam(':codesc', $_POST['codesc']);
 
-<?php
-    if (isset($_POST['submit'])) {
-        if($_POST['operation'] === 'add'){
-            $sql="INSERT INTO course VALUES ('$_POST[coid]','$_POST[coname]',0,'$_POST[codesc]')";
-            if (mysqli_query($conn, $sql)) {
-                echo "<div class='alert success'>New course added successfully</div>";
-                ob_start();
-            } else {
-                echo "<div class='alert info'>Error: " . mysqli_error($conn) . "</div>";
+                if ($stmt->execute()) {
+                    echo "<div class='alert success'>New course added successfully</div>";
+                    ob_start();
+                } else {
+                    echo "<div class='alert info'>Error: " . $stmt->errorInfo() . "</div>";
+                }
+            }elseif($_POST['operation'] === 'change'){
+
             }
-        }elseif($_POST['operation'] === 'change'){
-
         }
-    }
-?>
+    ?>
 
     <div class="tab center">
         <button class="tablinks" onclick="openTab(event, 'Add')" id="defaultOpen">Add Course</button>
@@ -31,7 +37,7 @@
     </div>
 
     <div id="Add" class="tabcontent">
-    <form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post">
+        <form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post">
             <div class="row">
                 <div class="col-4">
                     <label for="coid">Course Id *</label>
@@ -40,8 +46,8 @@
                     <input class='form-input' type="text" id="coname" name="coname" placeholder="..."  maxlength="256" required>
                 </div>
                 <div class="col-4">
-                <label for="codesc">Course Description</label>
-                    <textarea rows="10" class='form-input' id="codesc" name="codesc" placeholder="..." ></textarea>
+                    <label for="codesc">Course Description</label>
+                    <textarea rows="10" class='form-input' id="codesc" name="codesc" placeholder="..."></textarea>
                 </div>
             </div>
             <input type="hidden" name='operation' value='add'>
@@ -49,34 +55,34 @@
         </form>
     </div>
 
-        <div id="Change" class="tabcontent">
-            <h3>Select Course to Change</h3>
-            <input type="search" name="searchChange" oninput="getCourses(this.value)" placeholder="Course ID or Name" >
-            <table id="subjectList" class="tablelist" style="width:100%;text-align:left">
-            <?php
-            $sql="SELECT DISTINCT * FROM course ORDER BY RAND() LIMIT 5" ;
-                $result = mysqli_query($conn,$sql);
-                $resulCheck = mysqli_num_rows($result);
-                if(($resulCheck)>0){
-                    while($row = mysqli_fetch_array($result)) {
-                        echo "<tr>";
-                        echo "<td>" . $row['CourseId'] . "</td>";
-                        echo "<td>" . $row['CourseName'];
-                        echo "</td></tr>";
-                    }
+    <div id="Change" class="tabcontent">
+        <h3>Select Course to Change</h3>
+        <input type="search" name="searchChange" oninput="getCourses(this.value)" placeholder="Course ID or Name" >
+        <table id="subjectList" class="tablelist" style="width:100%;text-align:left">
+        <?php
+            $sql = "SELECT DISTINCT * FROM course ORDER BY RAND() LIMIT 5";
+            $stmt = $conn->query($sql);
+            $resulCheck = $stmt->rowCount();
+            if(($resulCheck)>0){
+                while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<tr>";
+                    echo "<td>" . $row['CourseId'] . "</td>";
+                    echo "<td>" . $row['CourseName'];
+                    echo "</td></tr>";
                 }
-            ?>
-            </table>
-            <!-- <p><i class="fa fa-exclamation-triangle"></i> This feature will be added soon.</p> -->
-            <input class="btn" type="submit" disabled value="Submit Change">
-        </div>
+            }
+        ?>
+        </table>
+        <!-- <p><i class="fa fa-exclamation-triangle"></i> This feature will be added soon.</p> -->
+        <input class="btn" type="submit" disabled value="Submit Change">
+    </div>
 
-        <div id="Delete" class="tabcontent">
+    <div id="Delete" class="tabcontent">
         <h3>Select Course to Delete</h3>
         <input type="search" name="searchDelete" placeholder="Course ID" >
 
         <input class="btn" type="submit" value="Confirm Delete">
-        </div>
+    </div>
 </div>
 
 <div class="col-2 notice">
@@ -91,7 +97,6 @@
         </ul>  
     </p>
 </div>
-
 <script>
 function getCourses(str) {
         if (window.XMLHttpRequest) {

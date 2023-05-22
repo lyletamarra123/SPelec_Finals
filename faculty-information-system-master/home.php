@@ -4,11 +4,15 @@
 	<div class="col-6">
 		<h1>Welcome to the Faculty Information Portal</h1>
 		<p>
-		Please check following things before the semester end exams.
+		Things you can check out on this website:
 		<ul>
-			<li>Registerd Course</li>
-			<li>Results of Previous Semester</li>
-			<li>Current GPA</li>
+			<li>Faculty Personal Information</li>
+			<li>Work History of faculty members</li>
+			<li>Publications of each faculty</li>
+			<li>Degrees Earned by faculty members</li>
+			<li>Grants/Awards given to faculty members</li>
+			<li>Courses Taught by faculty members</li>
+			<li>School Departments</li>
 		</ul>
 		</p>
 	</div>
