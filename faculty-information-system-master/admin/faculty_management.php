@@ -1,5 +1,5 @@
 <?php require('header.php');
-require_once('../includes/info_db_connect.php');
+require_once('../includes/db_connect.php');
 if (isset($_SESSION['stno'])) {
 } else {
     header("Location: login.php");
@@ -16,49 +16,45 @@ ob_start();
 
         <h3 class="user-list-header">
             List of all Faculty Members </h3>
-        <a href="add_faculty.php"><i class="fa fa-plus"></i></a>
+            <label for="ftitle"><a href="add_faculty.php"><i class="fa fa-plus"></i>Add a faculty</a></label>
         <hr>
 
    
         <?php
-                        $sql = "SELECT * FROM faculty";
-                        $result = $conn->query($sql);
-                        if (!$result) {
-                            die("Invalid Query: " . $conn->errorInfo()[2]);
-                        }
-                        echo "<table>
-                        <tr>
-                            <th>Faculty ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Contact Info</th>
-                            <th>Degrees </th>
-                            <th>Grant Awards</th>
-                            <th>Offices ID</th>
-                            <th>Action</th>
-                      
-                        </tr>";
+            $sql = "SELECT * FROM faculty";
+            $result = $conn->query($sql);
+            if (!$result) {
+                die("Invalid Query: " . $conn->errorInfo()[2]);
+                }
+                echo "<table>
+                    <tr>
+                        <th>Faculty ID</th>
+                        <th>Faculty Name</th>
+                        <th>Position</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Action</th>
+                        
+                    </tr>";
 
-                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-
-                            echo "<tr>
-                            <td>{$row['faculty_id']}</td>
-                            <td>{$row['first_name']}</td>
-                            <td>{$row['last_name']}</td>
-                            <td>{$row['contact_info']}</td>
-                            <td>{$row['degrees']}</td>
-                            <td>{$row['grants_awards']}</td>
-                            <td>{$row['office_id']}</td>
-                         
+                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                        echo 
+                        "<tr>
+                            <td>{$row['FacultyID']}</td>
+                            <td>{$row['FacultyName']}</td>
+                            <td>{$row['Position']}</td>
+                            <td>{$row['Department']}</td>
+                            <td>{$row['Email']}</td>
+                            <td>{$row['PhoneNumber']}</td>               
                             <td>
-                                <a href=\"update_faculty.php?faculty_id={$row['faculty_id']}\"><i class='fa fa-edit'></i></a>
-                                <a href=\"delete_faculty.php?faculty_id= {$row['faculty_id']}\"><i class='fa fa-trash'></i></a>
+                                <a href=\"update_faculty.php?FacultyID={$row['FacultyID']}\"><i class='fa fa-edit'></i></a>
+                                <a href=\"delete_faculty.php?FacultyID={$row['FacultyID']}\"><i class='fa fa-trash'></i></a>
                             </td>
                         </tr>";
-                        }
-
-                        echo "</table>";
-                        ?>
+                     }
+                echo "</table>";
+        ?>
     </div>
 </div>
 

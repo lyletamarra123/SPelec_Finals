@@ -1,6 +1,6 @@
 <?php
 require('header.php');
-require_once('../includes/info_db_connect.php');
+require_once('../includes/db_connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['stno'])) {
@@ -10,50 +10,50 @@ if (!isset($_SESSION['stno'])) {
 
 include('sidebar.php');
 ob_start();
-
-$course_id = "";
-$course_name = "";
-$department_id = "";
+$CourseCode = "";
+$CourseName = "";
+$FacultyName = "";
+$Department = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    if (!isset($_GET['course_id'])) {
+    if (!isset($_GET['CourseCode'])) {
         header("Location: data_entry_management.php");
         exit;
     }
-    $course_id = $_GET["course_id"];
-    $sql = "SELECT * FROM courses WHERE course_id = $course_id";
+    $CourseCode = $_GET["CourseCode"];
+    $sql = "SELECT * FROM courses WHERE CourseCode = '$CourseCode'";
     $result = $conn->query($sql);
     $row = $result->fetch(PDO::FETCH_ASSOC);
     if (!$row) {
         header("Location: data_entry_management.php");
         exit;
     }
-    $course_id = $row["course_id"];
-    $course_name = $row["course_name"];
-    $department_id = $row["department_id"];
-
-
-    $successMessage = "User Added Successfully";
+    $CourseCode = $row["CourseCode"];
+    $CourseName = $row["CourseName"];
+    $FacultyName = $row["FacultyName"];
+    $Department = $row["Department"];
 
     // Clear user input
 
 } else {
 
-    $course_id = $_POST["course_id"];
-    $course_name = $_POST["course_name"];
-    $department_id = $_POST["department_id"];
+    $CourseCode = $_POST["CourseCode"] ?? "";
+    $CourseName = $_POST["CourseName"] ?? "";
+    $FacultyName = $_POST["FacultyName"] ?? "";
+    $Department = $_POST["Department"] ?? "";
 
 
 
     $sql = "UPDATE courses " .
-        "SET course_id = '$course_id', course_name = '$course_name', department_id = '$department_id'" .
-        "WHERE course_id = $course_id";
+        "SET CourseCode = '$CourseCode', CourseName = '$CourseName', FacultyName = '$FacultyName', Department = '$Department'" .
+        "WHERE CourseCode = '$CourseCode'";
 
     $result = $conn->query($sql);
 
     if ($result) {
         // Redirect to user_management.php after successful update
+        $successMessage = "Course updated Successfully";
         header("Location: data_entry_management.php");
         exit;
     } else {
@@ -67,12 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <div class="box">
         <div class="col-8">
             <div class="user-list">
-                <h3 class="user-list-header">Add user section</h3>
+                <h3 class="user-list-header">Update course section</h3>
                 <a href="data_entry_management.php">
                     <li><i class="fa fa-arrow-right">Back</i></li>
                 </a>
                 <hr>
-                <?php if (!empty($successMessage)) : ?>
+                <div class="row">       
+                    <?php if (!empty($successMessage)) : ?>
                     <div class="success-message"><?php echo $successMessage; ?></div>
                     <script>
                         setTimeout(function() {
@@ -81,23 +82,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         }, 2000);
                     </script>
                 <?php endif; ?>
-                <form method="post">
-                    <input type="hidden" name="course_id" value="<?php echo $course_id; ?>">
-                    <div class="row">
+                <form method="post"> 
+                    <input type="hidden" name="CourseCode" value="<?php echo $CourseCode; ?>">
                         <div class="col-8">
-                            <label for="course_name">course_name</label>
-                            <input class="form-input" type="text" id="course_name" name="course_name" placeholder="..." maxlength="256" required value="<?php echo $course_name; ?>">
+                        <label for="CourseCode">Course Code</label>
+                            <input class="form-input" type="text" id="CourseCode" name="CourseCode" placeholder="..." maxlength="256" required value="<?php echo $CourseCode; ?>">
 
-                            <label for="department_id">department</label>
-                            <select class="form-input" id="department_id" name="department_id" required>
+                            <label for="CourseName">Course Name</label>
+                            <input class="form-input" type="text" id="CourseName" name="CourseName" placeholder="..." maxlength="256" required value="<?php echo $CourseName; ?>">
+                            
+                            <label for="FacultyName">Faculty Name</label>
+                            <select class="form-input" id="FacultyName" name="FacultyName" required>
                                 <?php
-                                $sql = "SELECT department_id, department_name FROM departments";
+                                $sql = "SELECT `FacultyID`, `FacultyName` FROM `faculty` ORDER BY `FacultyName` ASC";
                                 $result = $conn->query($sql);
                                 if ($result) {
                                     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                                        $deptID = $row['department_id'];
-                                        $label = $row['department_name'];
-                                        $selected = ($deptID == $deptID) ? 'selected' : '';
+                                        $factID = $row['FacultyID'];
+                                        $label = $row['FacultyName'];
+                                        $selected = ($factID == $factID) ? 'selected' : '';
+                                        echo "<option value=\"$label\" $selected>$label</option>";
+                                    }
+                                }
+                                ?>
+                            </select>
+
+                            <label for="Department">Department</label>
+                            <select class="form-input" id="Department" name="Department" required>
+                                <?php
+                                $sql = "SELECT `DepartmentCode`, `DepartmentName` FROM `department`";
+                                $result = $conn->query($sql);
+                                if ($result) {
+                                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                                        $deptID = $row['DepartmentCode'];
+                                        $label = $row['DepartmentName'];
+                                        $selected = ($deptID == $Department) ? 'selected' : '';
                                         echo "<option value=\"$deptID\" $selected>$label</option>";
                                     }
                                 }
@@ -105,8 +124,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                             </select>
                         </div>
                     </div>
-                    <input class="btn" type="submit" name="submit" value="update Courses ">
-                    <a href="faculty_management.php">CANCEL</a>
+                    <input class="btn" type="submit" name="submit" value="Update Course">
+                    <!-- <a href="faculty_management.php">CANCEL</a> -->
                 </form>
             </div>
         </div>

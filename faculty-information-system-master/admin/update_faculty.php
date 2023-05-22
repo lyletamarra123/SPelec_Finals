@@ -1,6 +1,6 @@
 <?php
 require('header.php');
-require_once('../includes/info_db_connect.php');
+require_once('../includes/db_connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['stno'])) {
@@ -11,63 +11,55 @@ if (!isset($_SESSION['stno'])) {
 include('sidebar.php');
 ob_start();
 
-$faculty_id = "";
-$first_name = "";
-$last_name = "";
-$contact_info = "";
-$work_history = "";
-$degrees = "";
-$grants_awards = "";
-$office_id = "";
+$FacultyID ="";
+$FacultyName = "";
+$Position = "";
+$Department = "";
+$Email = "";
+$PhoneNumber = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    if (!isset($_GET['faculty_id'])) {
+    if (!isset($_GET['FacultyID'])) {
         header("Location: faculty_management.php");
         exit;
     }
-    $faculty_id = $_GET["faculty_id"];
-    $sql = "SELECT * FROM faculty WHERE faculty_id = $faculty_id";
+    $FacultyID = $_GET["FacultyID"];
+    $sql = "SELECT * FROM faculty WHERE FacultyID = '$FacultyID'";
     $result = $conn->query($sql);
     $row = $result->fetch(PDO::FETCH_ASSOC);
     if (!$row) {
         header("Location: faculty_management.php");
         exit;
     }
-    $first_name = $row["first_name"];
-    $last_name = $row["last_name"];
-    $contact_info = $row["contact_info"];
-    $work_history = $row["work_history"];
-    $degrees = $row["degrees"];
-    $grants_awards = $row["grants_awards"];
-    $office_id = $row["office_id"];
-
-
-
-    $successMessage = "User Added Successfully";
+    // $FacultyID = $row["FacultyID"];
+    $FacultyName = $row["FacultyName"];
+    $Position = $row["Position"];
+    $Department = $row["Department"];
+    $Email = $row["Email"];
+    $PhoneNumber = $row["PhoneNumber"];
 
     // Clear user input
 
 } else {
 
-    $faculty_id = $_POST["faculty_id"];
-    $first_name = $_POST["first_name"];
-    $last_name = $_POST["last_name"];
-    $contact_info = $_POST["contact_info"];
-    $work_history = $_POST["work_history"];
-    $degrees = $_POST["degrees"];
-    $grants_awards = $_POST["grants_awards"];
-    $office_id = $_POST["office_id"];
+    $FacultyID = $_POST["FacultyID"];
+    $FacultyName = $_POST["FacultyName"];
+    $Position = $_POST["Position"];
+    $Department = $_POST["Department"];
+    $Email = $_POST["Email"];
+    $PhoneNumber = $_POST["PhoneNumber"];
 
 
     $sql = "UPDATE faculty " .
-        "SET faculty_id = '$faculty_id', first_name = '$first_name', last_name = '$last_name', contact_info = '$contact_info', work_history = '$work_history', degrees = '$degrees',  grants_awards = '$grants_awards',office_id = '$office_id' " .
-        "WHERE faculty_id = $faculty_id";
+        "SET FacultyName = '$FacultyName', Position = '$Position', Department = '$Department', Email = '$Email', PhoneNumber = '$PhoneNumber' " .
+        "WHERE FacultyID = '$FacultyID'";
 
     $result = $conn->query($sql);
 
     if ($result) {
         // Redirect to user_management.php after successful update
+        $successMessage = "User updated Successfully";
         header("Location: faculty_management.php");
         exit;
     } else {
@@ -80,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <div class="box">
         <div class="col-8">
             <div class="user-list">
-                <h3 class="user-list-header">Add user section</h3>
+                <h3 class="user-list-header">Update faculty section</h3>
                 <a href="faculty_management.php">
                     <li><i class="fa fa-arrow-right">Back</i></li>
                 </a>
@@ -95,47 +87,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     </script>
                 <?php endif; ?>
                 <form method="post">
-                    <input type="hidden" name="faculty_id" value="<?php echo $faculty_id; ?>">  
+                    <input type="hidden" name="FacultyID" value="<?php echo $FacultyID; ?>">  
                     <div class="row">
                         <div class="col-8">
-                            <label for="first_name">first name</label>
-                            <input class="form-input" type="text" id="first_name" name="first_name" placeholder="..." maxlength="256" required value="<?php echo $first_name; ?>">
+                        <label for="FacultyName">Faculty Name</label>
+                            <input class="form-input" type="text" id="FacultyName" name="FacultyName" placeholder="..." maxlength="256" required value="<?php echo $FacultyName; ?>">
 
 
-                            <label for="last_name">last name</label>
-                            <input class="form-input" type="text" id="usernlast_nameame" name="last_name" placeholder="..." maxlength="256" required value="<?php echo $last_name; ?>">
+                            <label for="Position">Position</label>
+                            <input class="form-input" type="text" id="Position" name="Position" placeholder="..." maxlength="256" required value="<?php echo $Position; ?>">
+
+                            <label for="Department">Department</label>
+                            <input class="form-input" type="text" id="Department" name="Department" placeholder="..." maxlength="256" required value="<?php echo $Department; ?>">
 
 
-                            <label for="contact_info">contact_info</label>
-                            <input class="form-input" type="text" id="contact_info" name="contact_info" placeholder="..." maxlength="256" required value="<?php echo $contact_info; ?>">
-
-                            <label for="work_history">work_history</label>
-                            <input class="form-input" type="text" id="work_history" name="work_history" placeholder="..." maxlength="256" required value="<?php echo $work_history; ?>">
+                            <label for="Email">Email</label>
+                            <input class="form-input" type="text" id="Email" name="Email" placeholder="..." maxlength="256" required value="<?php echo $Email; ?>">
 
 
-                            <label for="degrees">degrees</label>
-                            <input class="form-input" type="text" id="degrees" name="degrees" placeholder="..." maxlength="256" required value="<?php echo $degrees; ?>">
-
-
-                            <label for="grants_awards">grants awards</label>
-                            <input class="form-input" type="text" id="grants_awards" name="grants_awards" placeholder="..." maxlength="256" required value="<?php echo $grants_awards; ?>">
-
-
-                            <label for="role">Offices</label>
-                            <select class="form-input" id="role" name="office_id" required>
-                                <?php
-                                $sql = "SELECT office_id, office_address FROM offices";
-                                $result = $conn->query($sql);
-                                if ($result) {
-                                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                                        $officeId = $row['office_id'];
-                                        $label = $row['office_address'];
-                                        $selected = ($officeId == $office_id) ? 'selected' : '';
-                                        echo "<option value=\"$officeId\" $selected>$label</option>";
-                                    }
-                                }
-                                ?>
-                            </select>
+                            <label for="PhoneNumber">Phone Number</label>
+                            <input class="form-input" type="text" id="PhoneNumber" name="PhoneNumber" placeholder="..." maxlength="256" required value="<?php echo $PhoneNumber; ?>">
                         </div>
                     </div>
                     <input class="btn" type="submit" name="submit" value="Update Faculty ">

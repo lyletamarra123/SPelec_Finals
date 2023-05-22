@@ -1,13 +1,16 @@
 <?php require('header.php');
-require_once('../includes/info_db_connect.php');
+require_once('../includes/db_connect.php');
 if (isset($_SESSION['stno'])) {
 } else {
     header("Location: login.php");
 }
 include('sidebar.php');
 ob_start();
-$department_id = rand();
-$department_name = "";
+$DepartmentCode = "";
+$DepartmentName = "";
+$Email = "";
+$Phone = "";
+$Location = "";
 ?>
 
 
@@ -16,22 +19,27 @@ $department_name = "";
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // $department_id = $_POST["department_id"] ?? "";
-        $department_name = $_POST["department_name"] ?? "";
-
+        $DepartmentCode = $_POST["DepartmentCode"] ?? "";
+        $DepartmentName = $_POST["DepartmentName"] ?? "";
+        $Email = $_POST["Email"] ?? "";
+        $Phone = $_POST["Phone"] ?? "";
+        $Location = $_POST["Location"] ?? "";
 
         // Generate a unique user ID
         // $userid = uniqid();
 
-        $sql = "INSERT INTO departments (department_id, department_name) VALUES (?, ?)";
+        $sql = "INSERT INTO department(DepartmentCode, DepartmentName, Email, Phone, Location) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$department_id, $department_name]);
+        $stmt->execute([$DepartmentCode, $DepartmentName, $Email, $Phone, $Location]);
 
         $successMessage = "Department Added Successfully";
 
         // Clear user input
-
-        $department_id = rand();
-        $department_name = "";
+        $DepartmentCode = "";
+        $DepartmentName = "";
+        $Email = "";
+        $Phone = "";
+        $Location = "";
     }
     ?>
 
@@ -57,12 +65,24 @@ $department_name = "";
                         <?php endif; ?>
                         <div class="col-8">
 
-                            <label for=" departmentName">Department Name</label>
-                            <input class="form-input" type="text" id="departmentName" name="department_name" placeholder="..." maxlength="256" required value="<?php echo $department_name; ?>">
+                            <label for=" DepartmentCode">Department Code</label>
+                            <input class="form-input" type="text" id="DepartmentCode" name="DepartmentCode" placeholder="..." maxlength="256" required value="<?php echo $DepartmentCode; ?>">
+
+                            <label for=" DepartmentName">Department Name</label>
+                            <input class="form-input" type="text" id="DepartmentName" name="DepartmentName" placeholder="..." maxlength="256" required value="<?php echo $DepartmentName; ?>">
+
+                            <label for=" Email">Email</label>
+                            <input class="form-input" type="text" id="Email" name="Email" placeholder="..." maxlength="256" required value="<?php echo $Email; ?>">
+
+                            <label for=" Phone">Phone</label>
+                            <input class="form-input" type="text" id="Phone" name="Phone" placeholder="..." maxlength="256" required value="<?php echo $Phone; ?>">
+
+                            <label for=" Location">Location</label>
+                            <input class="form-input" type="text" id="Location" name="Location" placeholder="..." maxlength="256" required value="<?php echo $Location; ?>">
                         </div>
                     </div>
 
-                    <input class="btn" type="submit" name="submit" value="Add Faculty">
+                    <input class="btn" type="submit" name="submit" value="Add Department">
                 </form>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <?php
 require('header.php');
-require_once('../includes/info_db_connect.php');
+require_once('../includes/db_connect.php');
 
 if (isset($_SESSION['stno'])) {
 } else {
@@ -28,10 +28,10 @@ ob_start();
                         }
                         echo "<table>
                         <tr>
-                            <th>user_id</th>
+                            <th>User Id</th>
                             <th>username</th>
                             <th>password</th>
-                            <th>role_id</th>
+                            <th>Role</th>
                             <th>action</th>
                         </tr>";
                     
@@ -41,7 +41,7 @@ ob_start();
                             <td>{$row['user_id']}</td>
                             <td>{$row['username']}</td>
                             <td>{$row['password']}</td>
-                            <td>{$row['role_id']}</td>
+                            <td>{$row['role_name']}</td>
                             <td>
                                 <a href=\"update_user.php?user_id={$row['user_id']}\"><i class='fa fa-edit'></i></a>
                                 <a href=\"delete_user.php?user_id= {$row['user_id']}\"><i class='fa fa-trash'></i></a>

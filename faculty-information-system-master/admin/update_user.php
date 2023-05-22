@@ -1,6 +1,6 @@
 <?php
 require('header.php');
-require_once('../includes/info_db_connect.php');
+require_once('../includes/db_connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['stno'])) {
@@ -14,7 +14,7 @@ ob_start();
 $user_id = "";
 $username = "";
 $password = "";
-$role_id = "";
+$role_name = "";
 $successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -33,10 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
     $username = $row["username"];
     $password = $row["password"];
-    $role_id = $row["role_id"];
-
- 
-    $successMessage = "User Added Successfully";
+    $role_name = $row["role_name"];
 
     // Clear user input
 
@@ -45,17 +42,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $user_id = $_POST["user_id"];
     $username = $_POST["username"];
     $password = $_POST["password"];
-    $role_id = $_POST["role_id"];
+    $role_name = $_POST["role_name"];
 
 
     $sql = "UPDATE users ". 
-    "SET user_id = '$user_id', username = '$username', password = '$password', role_id = '$role_id'". 
+    "SET user_id = '$user_id', username = '$username', password = '$password', role_name = '$role_name'". 
     "WHERE user_id = $user_id";
 
     $result = $conn->query($sql);
 
     if ($result) {
         // Redirect to user_management.php after successful update
+        $successMessage = "User Updated Successfully";
         header("Location: user_management.php");
         exit;
     } else {
@@ -83,13 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
                             <label for="password">Password</label>
                             <input class="form-input" type="password" id="password" name="password" placeholder="..." maxlength="256" required value="<?php echo $password; ?>">
-
+                            
                             <label for="role">Role</label>
-                            <select class="form-input" id="role" name="role_id" required>
-                                <option value="1" <?php if ($role_id == 1) echo 'selected'; ?>>Admin</option>
-                                <option value="2" <?php if ($role_id == 2) echo 'selected'; ?>>Faculty</option>
-                                <option value="3" <?php if ($role_id == 3) echo 'selected'; ?>>Guest</option>
-                                <option value="4" <?php if ($role_id == 4) echo 'selected'; ?>>Students</option>
+                            <select class="form-input" id="role" name="role_name" required>
+                                <option value="Admin" <?php if ($role_name == 'Admin') echo 'selected'; ?>>Admin</option>
+                                <option value="Faculty" <?php if ($role_name == 'Faculty') echo 'selected'; ?>>Faculty</option>
+                                <option value="Guest" <?php if ($role_name == 'Guest') echo 'selected'; ?>>Guest</option>
+                                <option value="Students" <?php if ($role_name == 'Students') echo 'selected'; ?>>Students</option>
                             </select>
                         </div>
                     </div>

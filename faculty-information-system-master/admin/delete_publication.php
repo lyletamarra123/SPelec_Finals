@@ -1,10 +1,10 @@
 <?php
 
-if (isset($_GET["publication_id"])) {
+if (isset($_GET["Title"])) {
     
-    $publication_id = $_GET["publication_id"];
-    require_once('../includes/info_db_connect.php');
-    $sql = " DELETE FROM publications WHERE publication_id = $publication_id";
+    $Title = $_GET["Title"];
+    require_once('../includes/db_connect.php');
+    $sql = " DELETE FROM publications WHERE Title = '$Title'";
     $conn->query($sql);
 }
 header("Location: data_entry_management.php");

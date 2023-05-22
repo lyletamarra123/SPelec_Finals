@@ -1,10 +1,10 @@
 <?php
+require_once('../includes/db_connect.php');
+if (isset($_GET["FacultyID"])) {
 
-if (isset($_GET["faculty_id"])) {
-
-    $faculty_id = $_GET["faculty_id"];
-    require_once('../includes/info_db_connect.php');
-    $sql = " DELETE FROM faculty WHERE faculty_id = $faculty_id";
+    
+    $FacultyID = $_GET["FacultyID"];
+    $sql = " DELETE FROM faculty WHERE FacultyID = '$FacultyID'";
     $conn->query($sql);
  
   

@@ -1,10 +1,10 @@
 <?php
 
-if (isset($_GET["department_id"])) {
+if (isset($_GET["DepartmentCode"])) {
 
-    $department_id = $_GET["department_id"];
-    require_once('../includes/info_db_connect.php');
-    $sql = " DELETE FROM departments WHERE department_id = $department_id";
+    $DepartmentCode = $_GET["DepartmentCode"];
+    require_once('../includes/db_connect.php');
+    $sql = " DELETE FROM department WHERE DepartmentCode = '$DepartmentCode'";
     $conn->query($sql);
 }
 

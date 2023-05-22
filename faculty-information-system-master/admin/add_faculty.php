@@ -1,6 +1,6 @@
 <?php
 require('header.php');
-require_once('../includes/info_db_connect.php');
+require_once('../includes/db_connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['stno'])) {
@@ -11,41 +11,36 @@ if (!isset($_SESSION['stno'])) {
 include('sidebar.php');
 ob_start();
 
-$faculty_id =rand();
-$first_name = "";
-$last_name = "";
-$contact_info = "";
-$work_history = "";
-$degrees = "";
-$grants_awards = "";
-$office_id = "";
+$FacultyID ="";
+$FacultyName = "";
+$Position = "";
+$Department = "";
+$Email = "";
+$PhoneNumber = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $first_name = $_POST["first_name"] ?? "";
-    $last_name = $_POST["last_name"] ?? "";
-    $contact_info = $_POST["contact_info"] ?? "";
-    $work_history = $_POST["work_history"] ?? "";
-    $degrees = $_POST["degrees"] ?? "";
-    $grants_awards = $_POST["grants_awards"] ?? "";
-    $office_id = $_POST["office_id"] ?? "";
+    $FacultyID = $_POST["FacultyID"] ?? "";
+    $FacultyName = $_POST["FacultyName"] ?? "";
+    $Position = $_POST["Position"] ?? "";
+    $Department = $_POST["Department"] ?? "";
+    $Email = $_POST["Email"] ?? "";
+    $PhoneNumber = $_POST["PhoneNumber"] ?? "";
 
 
-    $sql = " INSERT INTO faculty(faculty_id, first_name, last_name, contact_info, work_history, degrees, grants_awards, office_id) VALUES (?, ?, ?, ?,?,?,?,?)";
+    $sql = " INSERT INTO faculty(FacultyID, FacultyName, Position, Department, Email, PhoneNumber) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$faculty_id, $first_name, $last_name, $contact_info, $work_history, $degrees, $grants_awards, $office_id]);
+    $stmt->execute([$FacultyID, $FacultyName, $Position, $Department, $Email, $PhoneNumber]);
 
     $successMessage = "Faculty  Added Successfully";
 
 
-    $faculty_id = rand();
-    $first_name = "";
-    $last_name = "";
-    $contact_info = "";
-    $work_history = "";
-    $degrees = "";
-    $grants_awards = "";
-    $office_id = "";
+    $FacultyID ="";
+    $FacultyName = "";
+    $Position = "";
+    $Department = "";
+    $Email = "";
+    $PhoneNumber = "";
 }
 ?>
 <div class='col-4'>
@@ -69,44 +64,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <form method="post">
                     <div class="row">
                         <div class="col-8">
-                            <label for="first_name">first name</label>
-                            <input class="form-input" type="text" id="first_name" name="first_name" placeholder="..." maxlength="256" required value="<?php echo $first_name; ?>">
+                            <label for="FacultyID">Faculty ID</label>
+                            <input class="form-input" type="text" id="FacultyID" name="FacultyID" placeholder="..." maxlength="256" required value="<?php echo $FacultyID; ?>">
 
 
-                            <label for="last_name">last name</label>
-                            <input class="form-input" type="text" id="usernlast_nameame" name="last_name" placeholder="..." maxlength="256" required value="<?php echo $last_name; ?>">
+                            <label for="FacultyName">Faculty Name</label>
+                            <input class="form-input" type="text" id="FacultyName" name="FacultyName" placeholder="..." maxlength="256" required value="<?php echo $FacultyName; ?>">
 
 
-                            <label for="contact_info">contact_info</label>
-                            <input class="form-input" type="text" id="contact_info" name="contact_info" placeholder="..." maxlength="256" required value="<?php echo $contact_info; ?>">
+                            <label for="Position">Position</label>
+                            <input class="form-input" type="text" id="Position" name="Position" placeholder="..." maxlength="256" required value="<?php echo $Position; ?>">
 
-                            <label for="work_history">work_history</label>
-                            <input class="form-input" type="text" id="work_history" name="work_history" placeholder="..." maxlength="256" required value="<?php echo $work_history; ?>">
-
-
-                            <label for="degrees">degrees</label>
-                            <input class="form-input" type="text" id="degrees" name="degrees" placeholder="..." maxlength="256" required value="<?php echo $degrees; ?>">
+                            <label for="Department">Department</label>
+                            <input class="form-input" type="text" id="Department" name="Department" placeholder="..." maxlength="256" required value="<?php echo $Department; ?>">
 
 
-                            <label for="grants_awards">grants awards</label>
-                            <input class="form-input" type="text" id="grants_awards" name="grants_awards" placeholder="..." maxlength="256" required value="<?php echo $grants_awards; ?>">
+                            <label for="Email">Email</label>
+                            <input class="form-input" type="text" id="Email" name="Email" placeholder="..." maxlength="256" required value="<?php echo $Email; ?>">
 
 
-                            <label for="role">Offices</label>
-                            <select class="form-input" id="role" name="office_id" required>
-                                <?php
-                                $sql = "SELECT office_id, office_address FROM offices";
-                                $result = $conn->query($sql);
-                                if ($result) {
-                                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                                        $officeId = $row['office_id'];
-                                        $label = $row['office_address'];
-                                        $selected = ($officeId == $office_id) ? 'selected' : '';
-                                        echo "<option value=\"$officeId\" $selected>$label</option>";
-                                    }
-                                }
-                                ?>
-                            </select>
+                            <label for="PhoneNumber">Phone Number</label>
+                            <input class="form-input" type="text" id="PhoneNumber" name="PhoneNumber" placeholder="..." maxlength="256" required value="<?php echo $PhoneNumber; ?>">
                         </div>
                     </div>
                     <input class="btn" type="submit" name="submit" value="Add Faculty ">

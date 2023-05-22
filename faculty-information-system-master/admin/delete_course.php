@@ -1,10 +1,10 @@
 <?php
 
-if (isset($_GET["course_id"])) {
+if (isset($_GET["CourseCode"])) {
 
-    $course_id = $_GET["course_id"];
-    require_once('../includes/info_db_connect.php');
-    $sql = " DELETE FROM courses WHERE course_id = $course_id";
+    $CourseCode = $_GET["CourseCode"];
+    require_once('../includes/db_connect.php');
+    $sql = " DELETE FROM courses WHERE CourseCode = '$CourseCode'";
     $conn->query($sql);
  
   

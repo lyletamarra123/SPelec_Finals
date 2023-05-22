@@ -1,6 +1,6 @@
 <?php
 require('header.php');
-require_once('../includes/info_db_connect.php');
+require_once('../includes/db_connect.php');
 // Check if the user is logged in
 if (!isset($_SESSION['stno'])) {
     header("Location: login.php");
@@ -9,43 +9,50 @@ if (!isset($_SESSION['stno'])) {
 include('sidebar.php');
 ob_start();
 
-$department_id = "";
-$department_name = "";
+$DepartmentCode = "";
+$DepartmentName = "";
+$Email = "";
+$Phone = "";
+$Location = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    if (!isset($_GET['department_id'])) {
+    if (!isset($_GET['DepartmentCode'])) {
         header("Location: data_entry_management.php");
         exit;
     }
-    $department_id = $_GET["department_id"];
-    $sql = "SELECT * FROM departments WHERE department_id = $department_id";
+    $DepartmentCode = $_GET["DepartmentCode"];
+    $sql = "SELECT * FROM department WHERE DepartmentCode = '$DepartmentCode'";
     $result = $conn->query($sql);
     $row = $result->fetch(PDO::FETCH_ASSOC);
     if (!$row) {
         header("Location: data_entry_management.php");
         exit;
     }
-    $department_id = $row["department_id"];
-    $department_name = $row["department_name"];
+    $DepartmentCode = $row["DepartmentCode"];
+    $DepartmentName = $row["DepartmentName"];
+    $Email = $row["Email"];
+    $Phone = $row["Phone"];
+    $Location = $row["Location"];
 
-    $successMessage = "User Added Successfully";
 
     // Clear user input
 
 } else {
+    $DepartmentCode = $_POST["DepartmentCode"];
+    $DepartmentName = $_POST["DepartmentName"];
+    $Email = $_POST["Email"];
+    $Phone = $_POST["Phone"];
+    $Location = $_POST["Location"];
 
-    $department_id = $_POST["department_id"];
-    $department_name = $_POST["department_name"];
-
-    $sql = "UPDATE departments " .
-        "SET department_id = '$department_id', department_name = '$department_name'" .
-        "WHERE department_id = $department_id";
+    $sql = "UPDATE department " .
+        "SET DepartmentCode = '$DepartmentCode', DepartmentName = '$DepartmentName', Email = '$Email', Phone = '$Phone', Location = '$Location'" .
+        "WHERE DepartmentCode = '$DepartmentCode'";
 
     $result = $conn->query($sql);
 
     if ($result) {
-
+        $successMessage = "Department updated Successfully";
         header("Location: data_entry_management.php");
         exit;
     } else {
@@ -57,14 +64,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <div class="row">
         <div class="col-6">
             <div class="user-list">
-                <h3 class="user-list-header">Add Department Section </h3>
+                <h3 class="user-list-header">Update Department Section </h3>
                 <a href="data_entry_management.php">
                     <li><i class="fa fa-arrow-right">Back </i></li>
                 </a>
                 <hr>
-                <form action="" method="post">
-                    <input type="hidden" name="department_id" value="<?php echo $department_id; ?>">
-                    <div class="row">
+                <div class="row">
                         <?php if (!empty($successMessage)) : ?>
                             <div class="success-message"><?php echo $successMessage; ?></div>
                             <script>
@@ -74,14 +79,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                                 }, 3000);
                             </script>
                         <?php endif; ?>
+                </div>
+                <form action="" method="post">
+                    <input type="hidden" name="DepartmentCode" value="<?php echo $DepartmentCode; ?>">
                         <div class="col-8">
+                            <label for="DepartmentCode">Department Code</label>
+                            <input class="hidden" type="text" id="DepartmentCode" name="DepartmentCode" placeholder="..." maxlength="256" required value="<?php echo $DepartmentCode; ?>">
 
-                            <label for=" departmentName">Department Name</label>
-                            <input class="form-input" type="text" id="departmentName" name="department_name" placeholder="..." maxlength="256" required value="<?php echo $department_name; ?>">
+                            <label for=" DepartmentName">Department Name</label>
+                            <input class="form-input" type="text" id="DepartmentName" name="DepartmentName" placeholder="..." maxlength="256" required value="<?php echo $DepartmentName; ?>">
+
+                            <label for=" Email">Email</label>
+                            <input class="form-input" type="text" id="Email" name="Email" placeholder="..." maxlength="256" required value="<?php echo $Email; ?>">
+
+                            <label for=" Phone">Phone</label>
+                            <input class="form-input" type="text" id="Phone" name="Phone" placeholder="..." maxlength="256" required value="<?php echo $Phone; ?>">
+
+                            <label for=" Location">Location</label>
+                            <input class="form-input" type="text" id="Location" name="Location" placeholder="..." maxlength="256" required value="<?php echo $Location; ?>">
                         </div>
-                    </div>
-
-                    <input class="btn" type="submit" name="submit" value="Update  Department">
+                    <input class="btn" type="submit" name="submit" value="Update Department">
                 </form>
             </div>
         </div>

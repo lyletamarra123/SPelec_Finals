@@ -1,6 +1,6 @@
 <?php
 require('header.php');
-require_once('../includes/info_db_connect.php');
+require_once('../includes/db_connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['stno'])) {
@@ -11,30 +11,31 @@ if (!isset($_SESSION['stno'])) {
 include('sidebar.php');
 ob_start();
 
-$publication_id = rand();
-$faculty_id = "";
-$title = "";
-$author = "";
-$publication_type_id = "";
+$Title ="";
+$PublicationType = "";
+$PublicationDate = "";
+$Author = "";
+$AuthorType = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $faculty_id = $_POST["faculty_id"] ?? "";
-    $title = $_POST["title"] ?? "";
-    $author = $_POST["author"] ?? "";
-    $publication_type_id = $_POST["publication_type_id"] ?? "";
+    $Title = $_POST["Title"] ?? "";
+    $PublicationType = $_POST["PublicationType"] ?? "";
+    $PublicationDate = $_POST["PublicationDate"] ?? "";
+    $Author = $_POST["Author"] ?? "";
+    $AuthorType = $_POST["AuthorType"] ?? "";
 
 
-    $sql = "INSERT INTO publications (publication_id, faculty_id, title, author, publication_type_id) VALUES (?,?,?,?,?)";
+    $sql = "INSERT INTO publications(Title, PublicationType, PublicationDate, Author, AuthorType) VALUES (?,?,?,?,?)";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$publication_id, $faculty_id, $title, $author, $publication_type_id]);
+    $stmt->execute([$Title, $PublicationType, $PublicationDate, $Author, $AuthorType]);
 
-    $successMessage = "Course  Added Successfully";
+    $successMessage = "Publication  Added Successfully";
 
-    $publication_id = rand();
-    $faculty_id = "";
-    $title = "";
-    $author = "";
-    $publication_type_id = "";
+    $Title ="";
+    $PublicationType = "";
+    $PublicationDate = "";
+    $Author = "";
+    $AuthorType = "";
 }
 ?>
 <div class='col-4'>
@@ -57,50 +58,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <?php endif; ?>
                 <form method="post">
                     <div class="row">
-                        <div class="col-8">
-                     
-                            <label for="faculty_id">faculty</label>
-                            <select class="form-input" id="faculty_id" name="faculty_id" required>
+                        <div class="col-8">                    
+                            <label for="Title">Title</label>
+                            <input class="form-input" type="text" id="Title" name="Title" placeholder="..." maxlength="256" required value="<?php echo $Title; ?>">
+
+                            <label for="PublicationType">Publication Type</label>
+                            <input class="form-input" type="text" id="PublicationType" name="PublicationType" placeholder="..." maxlength="256" required value="<?php echo $PublicationType; ?>">
+
+                            <label for="PublicationDate">Publication Date</label>
+                            <input class="form-input" type="text" id="PublicationDate" name="PublicationDate" placeholder="..." maxlength="256" required value="<?php echo $PublicationDate; ?>">
+
+                            <label for="Author">Author</label>
+                            <select class="form-input" id="Author" name="Author" required>
                                 <?php
-                                $sql = " SELECT faculty_id,last_name,first_name FROM faculty";
+                                $sql = "SELECT `FacultyID`, `FacultyName` FROM `faculty` ORDER BY `FacultyName` ASC";
                                 $result = $conn->query($sql);
                                 if ($result) {
                                     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                                        $faculty_id = $row['faculty_id'];
-                                        $fname = $row['first_name'];
-                                        $lname = $row['last_name'];
-                                        $selected = ($faculty_id == $faculty_id) ? 'selected' : '';
-                                        echo "<option value=\"$faculty_id\" $selected>$lname,  $fname  </option>";
+                                        $factID = $row['FacultyID'];
+                                        $label = $row['FacultyName'];
+                                        $selected = ($factID == $factID) ? 'selected' : '';
+                                        echo "<option value=\"$label\" $selected>$label</option>";
                                     }
                                 }
                                 ?>
                             </select>
-                            <label for="title">title</label>
-                            <input class="form-input" type="text" id="title" name="title" placeholder="..." maxlength="256" required value="<?php echo $title; ?>">
 
-                            <label for="author">author</label>
-                            <input class="form-input" type="text" id="author" name="author" placeholder="..." maxlength="256" required value="<?php echo $author; ?>">
-
-                            <label for="publication_type_id">publication Type</label>
-                            <select class="form-input" id="publication_type_id" name="publication_type_id" required>
-                                <?php
-                                $sql = "SELECT publication_type_id,publication_type_name FROM publication_types";
-                                $result = $conn->query($sql);
-                                if ($result) {
-                                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                                        $publication_type_id = $row['publication_type_id'];
-                                        $publication_type_name = $row['publication_type_name'];
-                                     
-                                        $selected = ($publication_type_id == $publication_type_id) ? 'selected' : '';
-                                        echo "<option value=\"$publication_type_id\" $selected>  $publication_type_name  </option>";
-                                    }
-                                }
-                                ?>
-                            </select>
+                            <label for="AuthorType">Author Type</label>
+                            <input class="form-input" type="text" id="AuthorType" name="AuthorType" placeholder="..." maxlength="256" required value="<?php echo $AuthorType; ?>">
                         </div>
                     </div>
                     <input class="btn" type="submit" name="submit" value="Add Publication  ">
-                    <a href="data_entry_management.php">CANCEL</a>
+                    <!-- <a href="data_entry_management.php">CANCEL</a> -->
                 </form>
             </div>
         </div>

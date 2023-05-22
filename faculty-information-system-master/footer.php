@@ -1,5 +1,5 @@
 <div class="footer center">
-	<p>All rights reserved. 2018 © | University of Kelaniya, Sri Lanka.</p>
+	<p>All rights reserved. 2023 © | University of Web Specialization, Cebu.</p>
 </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 require('header.php');
-require_once('../includes/info_db_connect.php');
+require_once('../includes/db_connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['stno'])) {
@@ -10,31 +10,49 @@ if (!isset($_SESSION['stno'])) {
 
 include('sidebar.php');
 ob_start();
-$user_id = rand();
 $username = "";
 $password = "";
-$role_id = "";
+$role_name = "";
 $successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST["username"] ?? "";
     $password = $_POST["password"] ?? "";
-    $role_id = $_POST["role_id"] ?? "";
+    $role_name = $_POST["role_name"] ?? "";
 
-    // Generate a unique user ID
-    // $userid = uniqid();
+    if ($role_name == 'Admin') {
+        // Add to staff table
+        $sql = "INSERT INTO staff (StaffNo, Password) VALUES (?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$username, $password]);
+    } elseif ($role_name == 'Students') {
+        // Add to student table
+        $sql = "INSERT INTO student (StudentNo, Password) VALUES (?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$username, $password]);
+    }
 
-    $sql = "INSERT INTO users (user_id, username, password, role_id) VALUES (?, ?, ?, ?)";
+    // Add to users table
+    // Retrieve the maximum user_id from the users table
+    $sql = "SELECT MAX(user_id) FROM users";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$user_id, $username, $password, $role_id]);
+    $stmt->execute();
+    $maxUserId = $stmt->fetchColumn();
+
+    // Increment the maximum user_id by 1 to generate the new user_id
+    $user_id = $maxUserId + 1;
+
+    // Insert into users table
+    $sql = "INSERT INTO `users` (user_id, username, password, role_name) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$user_id, $username, $password, $role_name]);
 
     $successMessage = "User Added Successfully";
 
     // Clear user input
-    $user_id= rand();
     $username = "";
     $password = "";
-    $role_id = "";
+    $role_name = "";
 }
 ?>
 <div class='col-4'>
@@ -65,12 +83,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <input class="form-input" type="password" id="password" name="password" placeholder="..." maxlength="256" required value="<?php echo $password; ?>">
                             
                             <label for="role">Role</label>
-                            <select class="form-input" id="role" name="role_id" required>
-                                <option value="1" <?php if ($role_id == 1) echo 'selected'; ?>>Admin</option>
-                                <option value="2" <?php if ($role_id == 2) echo 'selected'; ?>>Faculty</option>
-                                <option value="3" <?php if ($role_id == 3) echo 'selected'; ?>>Guest</option>
-                                <option value="4" <?php if ($role_id == 4) echo 'selected'; ?>>Students</option>
+                            <select class="form-input" id="role" name="role_name" required>
+                                <option value="Admin" <?php if ($role_name == 'Admin') echo 'selected'; ?>>Admin</option>
+                                <option value="Faculty" <?php if ($role_name == 'Faculty') echo 'selected'; ?>>Faculty</option>
+                                <option value="Guest" <?php if ($role_name == 'Guest') echo 'selected'; ?>>Guest</option>
+                                <option value="Students" <?php if ($role_name == 'Students') echo 'selected'; ?>>Students</option>
                             </select>
+
                         </div>
                     </div>
                     <input class="btn" type="submit" name="submit" value="Add User">
