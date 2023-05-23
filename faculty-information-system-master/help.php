@@ -5,13 +5,11 @@
         <h1>Help</h1>
         <input type="text" id="searchBar" disabled onkeyup="searchTable()" placeholder="Search with keyword" title="Type in a name">
         <?php 
-            $sql = "SELECT * FROM faq ORDER BY RAND() LIMIT 5";
-            $stmt = $conn->query($sql);
-            $resulCheck = $stmt->rowCount();
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo "<button class='accordion'>" . $row['faqHeading'] . "</button>";
-                echo "<div class='panel'>" . $row['faqContent'] . "</div>";
-            }
+        require_once('OOPClasses/FAQ.php');
+        $db = new DBConnect();
+		$conn = $db->getConnection();
+        $faqManager = new FAQManager($conn);
+        $faqManager->getFAQs();
         ?>
     </div>
 </div>

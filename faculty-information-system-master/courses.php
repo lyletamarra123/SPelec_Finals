@@ -1,4 +1,6 @@
-<?php require('header.php'); ?>
+<?php 
+	require('header.php'); 
+?>
 <style>
 	#subjectList {
 		border-collapse: collapse;
@@ -50,23 +52,11 @@
 				<th>Department</th>
             </tr>
             <?php 
-            $sql = "SELECT * FROM courses ORDER BY RAND() LIMIT 4";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-            $rowCount = $stmt->rowCount();
-            if ($rowCount > 0) {
-                foreach ($result as $row) {
-                    echo "<tr>";
-                    echo "<td>" . $row['CourseCode'] . "</td>";
-                    echo "<td>" . $row['CourseName'] . "</td>";
-                    echo "<td>" . $row['FacultyName'] . "</td>";
-					echo "<td>" . $row['Department'] . "</td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='3'>No Course or faculty member found.</td></tr>";
-            }
+			require('OOPClasses/Course.php');
+			$db = new DBConnect();
+			$conn = $db->getConnection();
+            $courses = new CourseSearch($conn);
+            $courses->getCourses();
             ?>
         </table>  
 		</div>

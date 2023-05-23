@@ -15,50 +15,28 @@ $CourseName = "";
 $FacultyName = "";
 $Department = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+require_once('../OOPClasses/Course.php');
+$db = new DBConnect();
+$conn = $db->getConnection();
+$courseUpdateForm = new CourseSearch($conn);
 
+$successMessage = "";
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (!isset($_GET['CourseCode'])) {
         header("Location: data_entry_management.php");
         exit;
     }
     $CourseCode = $_GET["CourseCode"];
-    $sql = "SELECT * FROM courses WHERE CourseCode = '$CourseCode'";
-    $result = $conn->query($sql);
-    $row = $result->fetch(PDO::FETCH_ASSOC);
-    if (!$row) {
-        header("Location: data_entry_management.php");
-        exit;
-    }
-    $CourseCode = $row["CourseCode"];
-    $CourseName = $row["CourseName"];
-    $FacultyName = $row["FacultyName"];
-    $Department = $row["Department"];
-
-    // Clear user input
-
-} else {
-
+    $courseUpdateForm->loadCourse($CourseCode);
+} 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $CourseCode = $_POST["CourseCode"] ?? "";
     $CourseName = $_POST["CourseName"] ?? "";
     $FacultyName = $_POST["FacultyName"] ?? "";
     $Department = $_POST["Department"] ?? "";
 
-
-
-    $sql = "UPDATE courses " .
-        "SET CourseCode = '$CourseCode', CourseName = '$CourseName', FacultyName = '$FacultyName', Department = '$Department'" .
-        "WHERE CourseCode = '$CourseCode'";
-
-    $result = $conn->query($sql);
-
-    if ($result) {
-        // Redirect to user_management.php after successful update
-        $successMessage = "Course updated Successfully";
-        header("Location: data_entry_management.php");
-        exit;
-    } else {
-        die("Invalid Query: " . $conn->errorInfo()[2]);
-    }
+    $courseUpdateForm->updateCourse($CourseCode, $CourseName, $FacultyName, $Department);
 }
 ?>
 
@@ -83,44 +61,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     </script>
                 <?php endif; ?>
                 <form method="post"> 
-                    <input type="hidden" name="CourseCode" value="<?php echo $CourseCode; ?>">
+                    <input type="hidden" name="CourseCode" value="<?php echo $courseUpdateForm->getCourseCode(); ?>">
                         <div class="col-8">
                         <label for="CourseCode">Course Code</label>
-                            <input class="form-input" type="text" id="CourseCode" name="CourseCode" placeholder="..." maxlength="256" required value="<?php echo $CourseCode; ?>">
+                            <input class="form-input" type="text" id="CourseCode" name="CourseCode" placeholder="..." maxlength="256" required value="<?php echo $courseUpdateForm->getCourseCode(); ?>">
 
                             <label for="CourseName">Course Name</label>
-                            <input class="form-input" type="text" id="CourseName" name="CourseName" placeholder="..." maxlength="256" required value="<?php echo $CourseName; ?>">
+                            <input class="form-input" type="text" id="CourseName" name="CourseName" placeholder="..." maxlength="256" required value="<?php echo $courseUpdateForm->getCourseName(); ?>">
                             
                             <label for="FacultyName">Faculty Name</label>
                             <select class="form-input" id="FacultyName" name="FacultyName" required>
-                                <?php
-                                $sql = "SELECT `FacultyID`, `FacultyName` FROM `faculty` ORDER BY `FacultyName` ASC";
-                                $result = $conn->query($sql);
-                                if ($result) {
-                                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                                        $factID = $row['FacultyID'];
-                                        $label = $row['FacultyName'];
-                                        $selected = ($factID == $factID) ? 'selected' : '';
-                                        echo "<option value=\"$label\" $selected>$label</option>";
-                                    }
-                                }
-                                ?>
+                                <?php echo $courseUpdateForm->getFacultyOptions($courseUpdateForm->getFacultyName()); ?>
                             </select>
 
                             <label for="Department">Department</label>
                             <select class="form-input" id="Department" name="Department" required>
-                                <?php
-                                $sql = "SELECT `DepartmentCode`, `DepartmentName` FROM `department`";
-                                $result = $conn->query($sql);
-                                if ($result) {
-                                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                                        $deptID = $row['DepartmentCode'];
-                                        $label = $row['DepartmentName'];
-                                        $selected = ($deptID == $Department) ? 'selected' : '';
-                                        echo "<option value=\"$deptID\" $selected>$label</option>";
-                                    }
-                                }
-                                ?>
+                                <?php echo $courseUpdateForm->getDepartmentOptions($courseUpdateForm->getDepartment()); ?>
                             </select>
                         </div>
                     </div>

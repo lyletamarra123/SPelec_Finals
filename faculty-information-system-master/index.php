@@ -23,7 +23,7 @@ if(isset($_SESSION['stno'])){
 			<h2>Welcome!</h2>
 			<p>You must log in to use the Faculty Information System.</p>
 			<p></p>
-			<input type="text" name="sno" placeholder="XX/201X/XXX" required="" />
+			<input type="text" name="sno" placeholder="Username" required="" />
 			<input type="password" name="pwd" placeholder="Password" required="" />
 			<input type="submit" name="submit" class="btn" value="Login">
 		</form>

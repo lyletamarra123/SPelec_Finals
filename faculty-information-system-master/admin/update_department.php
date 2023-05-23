@@ -1,11 +1,13 @@
 <?php
-require('header.php');
+require_once('header.php');
 require_once('../includes/db_connect.php');
+
 // Check if the user is logged in
 if (!isset($_SESSION['stno'])) {
     header("Location: login.php");
     exit;
 }
+
 include('sidebar.php');
 ob_start();
 
@@ -15,49 +17,30 @@ $Email = "";
 $Phone = "";
 $Location = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+require_once('../OOPClasses/Department.php');
+$db = new DBConnect();
+$conn = $db->getConnection();
+$departmentUpdateForm = new DepartmentSearch($conn);
 
+$successMessage = "";
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (!isset($_GET['DepartmentCode'])) {
         header("Location: data_entry_management.php");
         exit;
     }
+
     $DepartmentCode = $_GET["DepartmentCode"];
-    $sql = "SELECT * FROM department WHERE DepartmentCode = '$DepartmentCode'";
-    $result = $conn->query($sql);
-    $row = $result->fetch(PDO::FETCH_ASSOC);
-    if (!$row) {
-        header("Location: data_entry_management.php");
-        exit;
-    }
-    $DepartmentCode = $row["DepartmentCode"];
-    $DepartmentName = $row["DepartmentName"];
-    $Email = $row["Email"];
-    $Phone = $row["Phone"];
-    $Location = $row["Location"];
-
-
-    // Clear user input
-
-} else {
+    $departmentUpdateForm->loadDepartment($DepartmentCode);
+} 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $DepartmentCode = $_POST["DepartmentCode"];
     $DepartmentName = $_POST["DepartmentName"];
     $Email = $_POST["Email"];
     $Phone = $_POST["Phone"];
     $Location = $_POST["Location"];
 
-    $sql = "UPDATE department " .
-        "SET DepartmentCode = '$DepartmentCode', DepartmentName = '$DepartmentName', Email = '$Email', Phone = '$Phone', Location = '$Location'" .
-        "WHERE DepartmentCode = '$DepartmentCode'";
-
-    $result = $conn->query($sql);
-
-    if ($result) {
-        $successMessage = "Department updated Successfully";
-        header("Location: data_entry_management.php");
-        exit;
-    } else {
-        die("Invalid Query: " . $conn->errorInfo()[2]);
-    }
+    $departmentUpdateForm->updateDepartment($DepartmentCode, $DepartmentName, $Email, $Phone, $Location);
 }
 ?>
 <div class='col-4'>
@@ -70,34 +53,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 </a>
                 <hr>
                 <div class="row">
-                        <?php if (!empty($successMessage)) : ?>
-                            <div class="success-message"><?php echo $successMessage; ?></div>
-                            <script>
-                                setTimeout(function() {
-                                    var successMessage = document.querySelector('.success-message');
-                                    successMessage.style.display = 'none';
-                                }, 3000);
-                            </script>
-                        <?php endif; ?>
+                    <?php if (!empty($successMessage)) : ?>
+                        <div class="success-message"><?php echo $successMessage; ?></div>
+                        <script>
+                            setTimeout(function() {
+                                var successMessage = document.querySelector('.success-message');
+                                successMessage.style.display = 'none';
+                            }, 3000);
+                        </script>
+                    <?php endif; ?>
                 </div>
                 <form action="" method="post">
-                    <input type="hidden" name="DepartmentCode" value="<?php echo $DepartmentCode; ?>">
-                        <div class="col-8">
-                            <label for="DepartmentCode">Department Code</label>
-                            <input class="hidden" type="text" id="DepartmentCode" name="DepartmentCode" placeholder="..." maxlength="256" required value="<?php echo $DepartmentCode; ?>">
+                    <input type="hidden" name="DepartmentCode" value="<?php echo $departmentUpdateForm->getDepartmentCode(); ?>">
+                    <div class="col-8">
+                        <label for="DepartmentCode">Department Code</label>
+                        <input class="hidden" type="text" id="DepartmentCode" name="DepartmentCode" placeholder="..." maxlength="256" required value="<?php echo $departmentUpdateForm->getDepartmentCode(); ?>">
 
-                            <label for=" DepartmentName">Department Name</label>
-                            <input class="form-input" type="text" id="DepartmentName" name="DepartmentName" placeholder="..." maxlength="256" required value="<?php echo $DepartmentName; ?>">
+                        <label for=" DepartmentName">Department Name</label>
+                        <input class="form-input" type="text" id="DepartmentName" name="DepartmentName" placeholder="..." maxlength="256" required value="<?php echo $departmentUpdateForm->getDepartmentName(); ?>">
 
-                            <label for=" Email">Email</label>
-                            <input class="form-input" type="text" id="Email" name="Email" placeholder="..." maxlength="256" required value="<?php echo $Email; ?>">
+                        <label for=" Email">Email</label>
+                        <input class="form-input" type="text" id="Email" name="Email" placeholder="..." maxlength="256" required value="<?php echo $departmentUpdateForm->getEmail(); ?>">
 
-                            <label for=" Phone">Phone</label>
-                            <input class="form-input" type="text" id="Phone" name="Phone" placeholder="..." maxlength="256" required value="<?php echo $Phone; ?>">
+                        <label for=" Phone">Phone</label>
+                        <input class="form-input" type="text" id="Phone" name="Phone" placeholder="..." maxlength="256" required value="<?php echo $departmentUpdateForm->getPhone(); ?>">
 
-                            <label for=" Location">Location</label>
-                            <input class="form-input" type="text" id="Location" name="Location" placeholder="..." maxlength="256" required value="<?php echo $Location; ?>">
-                        </div>
+                        <label for=" Location">Location</label>
+                        <input class="form-input" type="text" id="Location" name="Location" placeholder="..." maxlength="256" required value="<?php echo $departmentUpdateForm->getLocation(); ?>">
+                    </div>
                     <input class="btn" type="submit" name="submit" value="Update Department">
                 </form>
             </div>
@@ -157,3 +140,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         margin-bottom: 10px;
     }
 </style>
+<?php require('../footer.php') ?>

@@ -1,4 +1,6 @@
-<?php require('header.php'); ?>
+<?php 
+	require('header.php'); 
+?>
 <style>
 	#subjectList {
 		border-collapse: collapse;
@@ -51,26 +53,12 @@
 				<th>End Date</th>
 				<th>Description</th>
             </tr>
-            <?php 
-            $sql = "SELECT * FROM workHistory ORDER BY RAND() LIMIT 4";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-            $rowCount = $stmt->rowCount();
-            if ($rowCount > 0) {
-                foreach ($result as $row) {
-                    echo "<tr>";
-                    echo "<td>" . $row['FacultyName'] . "</td>";
-                    echo "<td>" . $row['CompanyName'] . "</td>";
-                    echo "<td>" . $row['JobTitle'] . "</td>";
-					echo "<td>" . $row['StartDate'] . "</td>";
-					echo "<td>" . $row['EndDate'] . "</td>";
-					echo "<td>" . $row['Description'] . "</td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='3'>No faculty members found.</td></tr>";
-            }
+            <?php
+			require('OOPClasses/Work.php');
+			$db = new DBConnect();
+			$conn = $db->getConnection();
+            $workHistory = new WorkHistory($conn);
+            $workHistory->getWorkHistory();
             ?>
         </table>  
 		</div>

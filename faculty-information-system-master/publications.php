@@ -1,4 +1,6 @@
-<?php require('header.php'); ?>
+<?php 
+	require('header.php'); 
+?>
 <style>
 	#subjectList {
 		border-collapse: collapse;
@@ -51,24 +53,12 @@
 				<th>Author Type</th>
             </tr>
             <?php 
-            $sql = "SELECT * FROM publications ORDER BY RAND() LIMIT 4";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-            $rowCount = $stmt->rowCount();
-            if ($rowCount > 0) {
-                foreach ($result as $row) {
-                    echo "<tr>";
-                    echo "<td>" . $row['Title'] . "</td>";
-                    echo "<td>" . $row['PublicationType'] . "</td>";
-                    echo "<td>" . $row['PublicationDate'] . "</td>";
-					echo "<td>" . $row['Author'] . "</td>";
-					echo "<td>" . $row['AuthorType'] . "</td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='3'>No title or author found.</td></tr>";
-            }
+			require_once('OOPClasses/Publications.php');
+			$db = new DBConnect();
+			$conn = $db->getConnection();
+
+			$publication = new Publication($conn);
+			$publication->getPublicationsList();
             ?>
         </table>  
 		</div>

@@ -6,6 +6,11 @@ if (isset($_SESSION['stno'])) {
 }
 include('sidebar.php');
 ob_start();
+
+require_once('../OOPClasses/Department.php');
+$db = new DBConnect();
+$conn = $db->getConnection();
+
 $DepartmentCode = "";
 $DepartmentName = "";
 $Email = "";
@@ -25,12 +30,8 @@ $Location = "";
         $Phone = $_POST["Phone"] ?? "";
         $Location = $_POST["Location"] ?? "";
 
-        // Generate a unique user ID
-        // $userid = uniqid();
-
-        $sql = "INSERT INTO department(DepartmentCode, DepartmentName, Email, Phone, Location) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$DepartmentCode, $DepartmentName, $Email, $Phone, $Location]);
+        $departmentInsertion = new DepartmentSearch($conn);
+        $departmentInsertion->insertDepartment($DepartmentCode, $DepartmentName, $Email, $Phone, $Location);
 
         $successMessage = "Department Added Successfully";
 

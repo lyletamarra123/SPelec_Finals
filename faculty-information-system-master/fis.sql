@@ -36,7 +36,8 @@ VALUES
   (1, 'Admin', '12345', 'Admin'),
   (2, 'Teacher', '12345', 'Faculty'),
   (3, 'Guest', '12345', 'Guest'),
-  (4, 'SE/2015/003', '12345', 'Students');
+  (4, 'Student', '12345', 'Students'),
+  (5, 'Student2', '12345', 'Students');
 
 -- --------------------------------------------------------
 --
@@ -51,10 +52,10 @@ CREATE TABLE `faq` (
 -- Dumping data for table `faq`
 --
 INSERT INTO `faq` (`faqID`, `faqHeading`, `faqContent`) VALUES
-(1, 'Why my results are pending?', '<p>There can be several reasons to show results as \"pending\". Please contact the administrative division in the admin unit.</p>'),
-(2, 'What is the method of calculating GPA?', '<p>Our faculty use Standard GPA system with 4.0 scale as following.</p>\r\n<table>\r\n<thead>\r\n<tr><th>Grade</th><th>Marks</th><th>GPA</th><th>Grade</th><th>Marks</th><th>GPA</th></tr>\r\n</thead>\r\n<tbody>\r\n<tr><td>A+</td><td>85-100</td><td>4.0</td><td>C+</td><td>45-49</td><td>2.3</td></tr>\r\n<tr><td>A</td><td>70-84</td><td>4.0</td><td>C</td><td>40-44</td><td>2.0</td></tr>\r\n<tr><td>A-</td><td>65-69</td><td>3.7</td><td>C-</td><td>35-39</td><td>1.7</td></tr>\r\n<tr><td>B+</td><td>60-64</td><td>3.3</td><td>D+</td><td>30-34</td><td>1.3</td></tr>\r\n<tr><td>B</td><td>55-59</td><td>3.0</td><td>D</td><td>25-29</td><td>1.0</td></tr>\r\n<tr><td>B-</td><td>50-54</td><td>2.7</td><td>E</td><td>00-24</td><td>0.0</td></tr>\r\n</tbody>\r\n</table>'),
-(3, 'What is the pass mark for a exam?', '<p>If you obtained <b>Grade C</b> or higher for a subject you will be considers as pass. If not you have to sat for the repeat exam next year. However highest grade you can get in next year is C.</p>'),
-(4, 'When will be the admission released?', '<p>Admission will be released on the 31<sup>st</sup> July 2018. Please collect your admission from dean office between 08.30AM - 3.30PM. </p>');
+(1, 'Is this all the faculty members?', '<p>No! The system will generate new information once there is a new faculty member that will be added by the admin(s)</p>'),
+(2, 'Can the students or general users edit information here?', '<p>Sadly no, only the faculty members or admins can edit the information on this website.</p>'),
+(3, 'When does the system updates new information?', '<p>The system will always be updated every new semester to keep up with the new informations or changes.</p>'),
+(4, 'How can I create an account?', '<p>You can create an account by filling up the form in the Registrar\'\s office. The admin will create the account for you with the password and assigned Role and those information will be emailed to you.</p>');
 -- --------------------------------------------------------
 --
 -- Table structure for table `staff`
@@ -80,8 +81,9 @@ CREATE TABLE `student` (
 -- Dumping data for table `student`
 --
 INSERT INTO `student` (`StudentNo`, `Password`) VALUES
-('SE/2015/003', '12345'),
-('17/rp/01007', '12345');
+('student', '12345'),
+('student2', '12345'),
+('Guest', '12345');
 -- --------------------------------------------------------
 CREATE TABLE `department` (
   `DepartmentCode` varchar(256) NOT NULL,
@@ -272,6 +274,6 @@ ALTER TABLE `faq`
 COMMIT;
 
 -- select * from `roles`;
--- select * from `student`;
--- select * from `staff`;
--- select * from `users`;
+select * from `student`;
+select * from `staff`;
+select * from `users`;

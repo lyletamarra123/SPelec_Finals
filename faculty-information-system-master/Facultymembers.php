@@ -1,4 +1,6 @@
-<?php require('header.php'); ?>
+<?php 
+	require('header.php'); 
+?>
 <style>
 	#subjectList {
 		border-collapse: collapse;
@@ -52,25 +54,12 @@
 				<th>PhoneNumber</th>
             </tr>
             <?php 
-            $sql = "SELECT * FROM faculty ORDER BY RAND() LIMIT 4";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-            $rowCount = $stmt->rowCount();
-            if ($rowCount > 0) {
-                foreach ($result as $row) {
-                    echo "<tr>";
-                    echo "<td>" . $row['FacultyID'] . "</td>";
-                    echo "<td>" . $row['FacultyName'] . "</td>";
-                    echo "<td>" . $row['Position'] . "</td>";
-					echo "<td>" . $row['Department'] . "</td>";
-					echo "<td>" . $row['Email'] . "</td>";
-					echo "<td>" . $row['PhoneNumber'] . "</td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='3'>No faculty members found.</td></tr>";
-            }
+			require_once('OOPClasses/Faculty.php');
+			$db = new DBConnect();
+			$conn = $db->getConnection();
+
+			$faculty = new Faculty($conn);
+			$faculty->getFacultyMembers();
             ?>
         </table>  
 		</div>

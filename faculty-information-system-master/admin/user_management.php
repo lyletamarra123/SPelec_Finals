@@ -21,35 +21,11 @@ ob_start();
                         <a href="add_user.php"><i class="fa fa-plus"> Add user</i></a>
                         <hr>
                         <?php
-                        $sql = "SELECT * FROM users";
-                        $result = $conn->query($sql);
-                        if (!$result) {
-                            die("Invalid Query: " . $conn->errorInfo()[2]);
-                        }
-                        echo "<table>
-                        <tr>
-                            <th>User Id</th>
-                            <th>username</th>
-                            <th>password</th>
-                            <th>Role</th>
-                            <th>action</th>
-                        </tr>";
-                    
-                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                        
-                        echo "<tr>
-                            <td>{$row['user_id']}</td>
-                            <td>{$row['username']}</td>
-                            <td>{$row['password']}</td>
-                            <td>{$row['role_name']}</td>
-                            <td>
-                                <a href=\"update_user.php?user_id={$row['user_id']}\"><i class='fa fa-edit'></i></a>
-                                <a href=\"delete_user.php?user_id= {$row['user_id']}\"><i class='fa fa-trash'></i></a>
-                            </td>
-                        </tr>";
-                    }
-                    
-                    echo "</table>";
+                        require_once('../OOPClasses/UserManager.php');
+                        $db = new DBConnect();
+			            $conn = $db->getConnection();
+                        $userListManager = new UserListManager($conn);
+                        $userListManager->getUserList();  // Call the getUserList() method
                         ?>
                     </div>
                 </div>
@@ -57,7 +33,6 @@ ob_start();
         </form>
     </div>
 </div>
-
 
 <style>
     .user-list {
@@ -86,5 +61,5 @@ ob_start();
         margin-right: 10px;
     }
 </style>
-<script ></script>
+<script></script>
 <?php require('../footer.php') ?>

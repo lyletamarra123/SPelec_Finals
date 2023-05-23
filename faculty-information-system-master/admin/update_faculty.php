@@ -11,68 +11,41 @@ if (!isset($_SESSION['stno'])) {
 include('sidebar.php');
 ob_start();
 
-$FacultyID ="";
-$FacultyName = "";
-$Position = "";
-$Department = "";
-$Email = "";
-$PhoneNumber = "";
+require_once('../OOPClasses/Faculty.php');
+$db = new DBConnect();
+$conn = $db->getConnection();
+$facultyUpdateForm = new Faculty($conn);
+
+$successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-
     if (!isset($_GET['FacultyID'])) {
         header("Location: faculty_management.php");
         exit;
     }
-    $FacultyID = $_GET["FacultyID"];
-    $sql = "SELECT * FROM faculty WHERE FacultyID = '$FacultyID'";
-    $result = $conn->query($sql);
-    $row = $result->fetch(PDO::FETCH_ASSOC);
-    if (!$row) {
-        header("Location: faculty_management.php");
-        exit;
-    }
-    // $FacultyID = $row["FacultyID"];
-    $FacultyName = $row["FacultyName"];
-    $Position = $row["Position"];
-    $Department = $row["Department"];
-    $Email = $row["Email"];
-    $PhoneNumber = $row["PhoneNumber"];
 
-    // Clear user input
-
-} else {
-
-    $FacultyID = $_POST["FacultyID"];
-    $FacultyName = $_POST["FacultyName"];
-    $Position = $_POST["Position"];
-    $Department = $_POST["Department"];
-    $Email = $_POST["Email"];
-    $PhoneNumber = $_POST["PhoneNumber"];
-
-
-    $sql = "UPDATE faculty " .
-        "SET FacultyName = '$FacultyName', Position = '$Position', Department = '$Department', Email = '$Email', PhoneNumber = '$PhoneNumber' " .
-        "WHERE FacultyID = '$FacultyID'";
-
-    $result = $conn->query($sql);
-
-    if ($result) {
-        // Redirect to user_management.php after successful update
-        $successMessage = "User updated Successfully";
-        header("Location: faculty_management.php");
-        exit;
-    } else {
-        die("Invalid Query: " . $conn->errorInfo()[2]);
-    }
+    $facultyID = $_GET["FacultyID"];
+    $facultyUpdateForm->loadFaculty($facultyID);
 }
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $facultyID = $_POST["FacultyID"];
+    $facultyName = $_POST["FacultyName"];
+    $position = $_POST["Position"];
+    $department = $_POST["Department"];
+    $email = $_POST["Email"];
+    $phoneNumber = $_POST["PhoneNumber"];
+
+    $facultyUpdateForm->updateFaculty($facultyID, $facultyName, $position, $department, $email, $phoneNumber);
+}
+
 ?>
 
 <div class='col-4'>
     <div class="box">
         <div class="col-8">
             <div class="user-list">
-                <h3 class="user-list-header">Update faculty section</h3>
+                <h3 class="user-list-header">Update Faculty Section</h3>
                 <a href="faculty_management.php">
                     <li><i class="fa fa-arrow-right">Back</i></li>
                 </a>
@@ -87,30 +60,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     </script>
                 <?php endif; ?>
                 <form method="post">
-                    <input type="hidden" name="FacultyID" value="<?php echo $FacultyID; ?>">  
+                    <input type="hidden" name="FacultyID" value="<?php echo $facultyUpdateForm->getFacultyID(); ?>">
                     <div class="row">
                         <div class="col-8">
-                        <label for="FacultyName">Faculty Name</label>
-                            <input class="form-input" type="text" id="FacultyName" name="FacultyName" placeholder="..." maxlength="256" required value="<?php echo $FacultyName; ?>">
-
+                            <label for="FacultyName">Faculty Name</label>
+                            <input class="form-input" type="text" id="FacultyName" name="FacultyName" placeholder="..." maxlength="256" required value="<?php echo $facultyUpdateForm->getFacultyName(); ?>">
 
                             <label for="Position">Position</label>
-                            <input class="form-input" type="text" id="Position" name="Position" placeholder="..." maxlength="256" required value="<?php echo $Position; ?>">
+                            <input class="form-input" type="text" id="Position" name="Position" placeholder="..." maxlength="256" required value="<?php echo $facultyUpdateForm->getPosition(); ?>">
 
                             <label for="Department">Department</label>
-                            <input class="form-input" type="text" id="Department" name="Department" placeholder="..." maxlength="256" required value="<?php echo $Department; ?>">
-
+                            <input class="form-input" type="text" id="Department" name="Department" placeholder="..." maxlength="256" required value="<?php echo $facultyUpdateForm->getDepartment(); ?>">
 
                             <label for="Email">Email</label>
-                            <input class="form-input" type="text" id="Email" name="Email" placeholder="..." maxlength="256" required value="<?php echo $Email; ?>">
-
+                            <input class="form-input" type="text" id="Email" name="Email" placeholder="..." maxlength="256" required value="<?php echo $facultyUpdateForm->getEmail(); ?>">
 
                             <label for="PhoneNumber">Phone Number</label>
-                            <input class="form-input" type="text" id="PhoneNumber" name="PhoneNumber" placeholder="..." maxlength="256" required value="<?php echo $PhoneNumber; ?>">
+                            <input class="form-input" type="text" id="PhoneNumber" name="PhoneNumber" placeholder="..." maxlength="256" required value="<?php echo $facultyUpdateForm->getPhoneNumber(); ?>">
                         </div>
                     </div>
-                    <input class="btn" type="submit" name="submit" value="Update Faculty ">
-                    <a href="faculty_management.php">CANCEL</a>
+                    <input class="btn" type="submit" name="submit" value="Update Faculty">
                 </form>
             </div>
         </div>
@@ -118,8 +87,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 </div>
 
 <style>
-    /* Rest of your CSS code */
+.user-list {
+        border: 1px solid #ccc;
+        padding: 10px;
+        width: 100%;
+        background-color: #f7f7f7;
+    }
 
+    .user-list ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .user-list li {
+        border-bottom: 1px solid #ccc;
+        padding: 5px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .icons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .icons:last-child {
+        margin-left: auto;
+    }
+
+    .icon {
+        display: flex;
+        align-items: flex-end;
+
+    }
+
+    .user-list-header {
+        margin-right: 10px;
+    }
+
+    .box {
+        padding-bottom: 30%;
+    }
     .success-message {
         color: green;
         font-weight: bold;

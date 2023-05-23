@@ -1,4 +1,6 @@
-<?php require('header.php'); ?>
+<?php 
+	require('header.php'); 
+?>
 <style>
 	#subjectList {
 		border-collapse: collapse;
@@ -49,22 +51,12 @@
                 <th>Date Attained</th>
             </tr>
             <?php 
-            $sql = "SELECT * FROM grantsAwards ORDER BY RAND() LIMIT 4";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-            $rowCount = $stmt->rowCount();
-            if ($rowCount > 0) {
-                foreach ($result as $row) {
-                    echo "<tr>";
-                    echo "<td>" . $row['FacultyName'] . "</td>";
-                    echo "<td>" . $row['GrantsAwards'] . "</td>";
-                    echo "<td>" . $row['DateAttained'] . "</td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='3'>No faculty member found.</td></tr>";
-            }
+			require_once('OOPClasses/Awards.php');
+			$db = new DBConnect();
+			$conn = $db->getConnection();
+
+            $grantsAwards = new GrantsAwards($conn);
+            $grantsAwards->getGrantsAwards();
             ?>
         </table>  
 		</div>

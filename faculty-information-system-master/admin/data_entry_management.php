@@ -12,7 +12,6 @@ ob_start();
     <div class="tab center">
         <button class="tablinks" onclick="openTab(event, 'Add')" id="defaultOpen">Department</button>
         <button class="tablinks" onclick="openTab(event, 'Course')">Courses</button>
-        <button class="tablinks" onclick="openTab(event, 'Publication')">Publications </button>
     </div>
     <div id="Add" class="tabcontent">
         <form action=">" method="post">
@@ -22,39 +21,12 @@ ob_start();
                         <label for="ftitle"><a href="add_department.php"><i class="fa fa-plus"></i>Add a Department</a></label>
                         <hr>
                         <?php
-                        $sql = "SELECT * FROM department";
-                        $result = $conn->query($sql);
-                        if (!$result) {
-                            die("Invalid Query: " . $conn->errorInfo()[2]);
-                        }
-                        echo "<table>
-                        <tr>
-                            <th>Department Code</th>
-                            <th>Department Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Location</th>
-                            <th>Action</th>
-                        </tr>";
-
-                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-
-                            echo "<tr>
-                            <td>{$row['DepartmentCode']}</td>
-                            <td>{$row['DepartmentName']}</td>
-                            <td>{$row['Email']}</td>
-                            <td>{$row['Phone']}</td>
-                            <td>{$row['Location']}</td>
-                            <td>
-                                <a href=\"update_department.php?DepartmentCode={$row['DepartmentCode']}\"><i class='fa fa-edit'></i></a>
-                                <a href=\"delete_department.php?DepartmentCode={$row['DepartmentCode']}\"><i class='fa fa-trash'></i></a>
-                            </td>
-                        </tr>";
-                        }
-
-                        echo "</table>";
+                        require_once('../OOPClasses/Department.php');
+                        $db = new DBConnect();
+                        $conn = $db->getConnection();
+                        $DepartmentManager = new DepartmentSearch($conn);
+                        $DepartmentManager->displayDepartments();
                         ?>
-
                     </div>
                 </div>
             </div>
@@ -70,83 +42,13 @@ ob_start();
                         <label for="ftitle"><a href="add_course.php"><i class="fa fa-plus"></i>Add a Course</a></label>
                         <hr>
                         <?php
-                        $sql = "SELECT * FROM courses";
-                        $result = $conn->query($sql);
-                        if (!$result) {
-                            die("Invalid Query: " . $conn->errorInfo()[2]);
-                        }
-                        echo "<table>
-                        <tr>
-                            <th>Course Code</th>
-                            <th>Course Name</th>
-                            <th>Faculty Name</th>
-                            <th>Department</th>
-                            <th>Action</th>
-                        </tr>";
-
-                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-
-                            echo "<tr>
-                            <td>{$row['CourseCode']}</td>
-                            <td>{$row['CourseName']}</td>
-                            <td>{$row['FacultyName']}</td>
-                            <td>{$row['Department']}</td>                                           
-                            <td>
-                                <a href=\"update_course.php?CourseCode={$row['CourseCode']}\"><i class='fa fa-edit'></i></a>
-                                <a href=\"delete_course.php?CourseCode={$row['CourseCode']}\"><i class='fa fa-trash'></i></a>
-                            </td>
-                        </tr>";
-                        }
-                        echo "</table>";
+                        require_once('../OOPClasses/Course.php');
+                        $db = new DBConnect();
+                        $conn = $db->getConnection();
+                        $CourseManager = new CourseSearch($conn);
+                        $CourseManager->displayCourses();
                         ?>
                     </div>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div id="Publication" class="tabcontent">
-        <form action=">" method="post">
-            <div class="row">
-                <div class="col-12">
-                    <div class="user-list">
-                        <label for="ftitle"><a href="add_publication.php"><i class="fa fa-plus"></i>Add a Publication</a></label>
-                        <hr>
-                        <?php
-                        $sql = "SELECT * FROM publications";
-                        $result = $conn->query($sql);
-                        if (!$result) {
-                            die("Invalid Query: " . $conn->errorInfo()[2]);
-                        }
-                        echo "<table>
-                        <tr>
-                            <th>Title</th>
-                            <th>Publication Type</th>
-                            <th>Publication Date</th>
-                            <th>Author</th>
-                            <th>Author Type</th>
-                            <th>Action</th>
-                      
-                        </tr>";
-
-                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-
-                            echo "<tr>
-                            <td>{$row['Title']}</td>
-                            <td>{$row['PublicationType']}</td>
-                            <td>{$row['PublicationDate']}</td>
-                            <td>{$row['Author']}</td>
-                            <td>{$row['AuthorType']}</td>                                                                
-                            <td>
-                                <a href=\"update_publication.php?Title={$row['Title']}\"><i class='fa fa-edit'></i></a>
-                                <a href=\"delete_publication.php?Title={$row['Title']}\"><i class='fa fa-trash'></i></a>
-                            </td>
-                        </tr>";
-                        }
-                        echo "</table>";
-                        ?>
-                    </div>
-                 
                 </div>
             </div>
         </form>

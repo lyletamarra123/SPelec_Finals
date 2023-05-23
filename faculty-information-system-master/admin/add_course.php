@@ -10,6 +10,11 @@ if (!isset($_SESSION['stno'])) {
 
 include('sidebar.php');
 ob_start();
+
+require_once('../OOPClasses/Course.php');
+$db = new DBConnect();
+$conn = $db->getConnection();
+
 $CourseCode = "";
 $CourseName = "";
 $FacultyName = "";
@@ -24,10 +29,8 @@ $Department = "";
         $FacultyName = $_POST["FacultyName"] ?? "";
         $Department = $_POST["Department"] ?? "";
 
-
-        $sql = "INSERT INTO courses (CourseCode, CourseName, FacultyName, Department) VALUES (?,?,?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$CourseCode, $CourseName, $FacultyName, $Department]);
+        $courseInsertion = new CourseSearch($conn);
+        $courseInsertion->insertCourse($CourseCode, $CourseName, $FacultyName, $Department);
 
         $successMessage = "Course Added Successfully";
         $CourseCode = "";

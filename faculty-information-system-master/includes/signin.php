@@ -1,43 +1,56 @@
 <?php
 session_start();
 
-if(isset($_POST['submit'])){
-    include_once 'db_connect.php';
+class Authentication {
+    private $conn;
 
-    $sno = $_POST['sno'];
-    $pwd = $_POST['pwd'];
+    public function __construct($conn) {
+        $this->conn = $conn;
+    }
 
-    if(empty($sno) || empty($pwd)){
-        header("Location: ../?error=empty");
-        exit();
-    }else{
-        $sql = "SELECT * FROM student WHERE StudentNo=:sno";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':sno', $sno);
-        $stmt->execute();
-
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $resulCheck = $stmt->rowCount();
-
-        if($resulCheck == 0){
-            header("Location: ../?error=missing");
-            header("Location: ../index.php");
+    public function authenticate($sno, $pwd) {
+        if (empty($sno) || empty($pwd)) {
+            header("Location: ../?error=empty");
             exit();
-        }else{
-            if($row){
-                $pwdCheck = $row['Password'];
-                if($pwdCheck!=$pwd){
-                    header("Location: ../?error=wrong");
-                    exit();
-                }else{
-                    $_SESSION['sno'] = $row['StudentNo'];
-                    header("Location: ../home.php");
+        } else {
+            $sql = "SELECT * FROM student WHERE StudentNo=:sno";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':sno', $sno);
+            $stmt->execute();
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $resulCheck = $stmt->rowCount();
+
+            if ($resulCheck == 0) {
+                header("Location: ../?error=missing");
+                exit();
+            } else {
+                if ($row) {
+                    $pwdCheck = $row['Password'];
+                    if ($pwdCheck != $pwd) {
+                        header("Location: ../?error=wrong");
+                        exit();
+                    } else {
+                        $_SESSION['sno'] = $row['StudentNo'];
+                        header("Location: ../home.php");
+                    }
                 }
             }
         }
     }
+}
 
-}else {
+if (isset($_POST['submit'])) {
+    include_once 'db_connect.php';
+    $db = new DBConnect();
+    $conn = $db->getConnection();
+
+    $sno = $_POST['sno'];
+    $pwd = $_POST['pwd'];
+
+    $authentication = new Authentication($conn);
+    $authentication->authenticate($sno, $pwd);
+} else {
     header("Location: ../index.php");
     exit();
 }

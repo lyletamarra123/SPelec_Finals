@@ -10,6 +10,12 @@ if (!isset($_SESSION['stno'])) {
 
 include('sidebar.php');
 ob_start();
+
+require_once('../OOPClasses/UserManager.php');
+$db = new DBConnect();
+$conn = $db->getConnection();
+$userListManager = new UserListManager($conn);
+
 $username = "";
 $password = "";
 $role_name = "";
@@ -20,36 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST["password"] ?? "";
     $role_name = $_POST["role_name"] ?? "";
 
-    if ($role_name == 'Admin') {
-        // Add to staff table
-        $sql = "INSERT INTO staff (StaffNo, Password) VALUES (?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$username, $password]);
-    } elseif ($role_name == 'Students') {
-        // Add to student table
-        $sql = "INSERT INTO student (StudentNo, Password) VALUES (?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$username, $password]);
-    }
-
-    // Add to users table
-    // Retrieve the maximum user_id from the users table
-    $sql = "SELECT MAX(user_id) FROM users";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $maxUserId = $stmt->fetchColumn();
-
-    // Increment the maximum user_id by 1 to generate the new user_id
-    $user_id = $maxUserId + 1;
-
-    // Insert into users table
-    $sql = "INSERT INTO `users` (user_id, username, password, role_name) VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$user_id, $username, $password, $role_name]);
+    $userListManager->addUser($username, $password, $role_name);
 
     $successMessage = "User Added Successfully";
 
-    // Clear user input
     $username = "";
     $password = "";
     $role_name = "";
@@ -93,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                     </div>
                     <input class="btn" type="submit" name="submit" value="Add User">
-                    <a href="user_management.php">CANCEL</a>
                 </form>
             </div>
         </div>
