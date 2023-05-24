@@ -33,7 +33,8 @@ $publications = Profile::fetchPublicationFromDatabase($facultyId, $conn);
                 <?php foreach ($publications as $publication) : ?>
                     <h2>Title: <?php echo $publication['title']; ?>   </h2>
                     <p>Publication ID: <?php echo $publication['publication_id']; ?>     
-                       <a href="update_publications.php" > Edit</a></p>
+                       <a href="update_publications.php?id=<?php echo $publication['publication_id']; ?>" >
+                        Edit</a></p>
                
                     <p>Type: <?php echo $publication['publication_type']; ?></p>
                     <p>Date: <?php echo $publication['publication_date']; ?></p>

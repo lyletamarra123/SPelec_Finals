@@ -9,6 +9,7 @@ class Profile
     private $email;
     private $phoneNumber;
 
+    
     public function __construct($facultyId, $facultyName, $position, $department, $email, $phoneNumber)
     {
         $this->facultyId = $facultyId;
@@ -179,29 +180,36 @@ class Profile
         }
     }
     public function addPublication($publication_id, $title, $publication_type, $publication_date, $facultyId, $conn)
-{
-    // Prepare the SQL statement
-    $sql = "INSERT INTO publications (publication_id, title, publication_type, publication_date, faculty_id)
+    {
+        // Prepare the SQL statement
+        $sql = "INSERT INTO publications (publication_id, title, publication_type, publication_date, faculty_id)
               VALUES (:publication_id, :title, :publication_type, :publication_date, :faculty_id)";
 
-    // Prepare the statement
-    $stmt = $conn->prepare($sql);
+        // Prepare the statement
+        $stmt = $conn->prepare($sql);
 
-    // Bind the parameters
-    $stmt->bindParam(':publication_id', $publication_id);
-    $stmt->bindParam(':title', $title);
-    $stmt->bindParam(':publication_type', $publication_type);
-    $stmt->bindParam(':publication_date', $publication_date);
-    $stmt->bindParam(':faculty_id', $facultyId);
+        // Bind the parameters
+        $stmt->bindParam(':publication_id', $publication_id);
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':publication_type', $publication_type);
+        $stmt->bindParam(':publication_date', $publication_date);
+        $stmt->bindParam(':faculty_id', $facultyId);
 
-    // Execute the statement
-    if ($stmt->execute()) {
-        // Publication record added successfully
-        // You can perform any additional actions here
-    } else {
-        // Failed to add the publication record
-        // You can handle the error accordingly
+        // Execute the statement
+        if ($stmt->execute()) {
+            // Publication record added successfully
+            // You can perform any additional actions here
+        } else {
+            // Failed to add the publication record
+            // You can handle the error accordingly
+        }
     }
-}
-
+    public function updatePublication($conn, $title, $publication_type, $publication_date,$facultyId )
+    {
+    
+        // Update the publication information
+        $sql = "UPDATE publications SET title = ?, publication_type = ?, publication_date = ? WHERE faculty_id = ?";
+        $publicationStmt = $conn->prepare($sql);
+        $publicationStmt->execute([$title, $publication_type, $publication_date, $facultyId]);
+    }
 }

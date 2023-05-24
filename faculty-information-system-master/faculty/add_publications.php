@@ -16,7 +16,6 @@ $profile = Profile::fetchProfileFromDatabase($facultyId, $conn);
 
 if ($profile) {
     $facultyId = $profile->getFacultyId();
-
 } else {
     // Handle the case when profile is not found
     echo "Profile not found.";
@@ -39,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <div class='col-4'>
     <div class="box">
-        <div class="col-8">
+        <div class="col-3">
             <div class="user-list">
                 <h3 class="user-list-header">Add publication section</h3>
                 <a href="publication.php">
@@ -56,19 +55,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </script>
                 <?php endif; ?>
                 <form method="post">
-                    <div class="row">
-                        <div class="col-8">
-                            <label for="publicationTitle">Publication Title</label>
-                            <input class="form-input" type="text" id="publication_title" name="publication_title" required>
 
-                            <label for="publicationType">Publication Type</label>
-                            <input class="form-input" type="text" id="publication_type" name="publication_type" required>
+                    <label for="publicationTitle">Publication Title</label>
+                    <input class="form-input" type="text" id="publication_title" name="publication_title" required>
 
-                            <label for="publicationDate">Publication Date</label>
-                            <input class="form-input" type="text" id="publication_date" name="publication_date" placeholder="YYYY-MM-DD" required>
+                    <label for="publicationType">Publication Type</label>
+                    <input class="form-input" type="text" id="publication_type" name="publication_type" required>
 
-                        </div>
-                    </div>
+                    <label for="publicationDate">Publication Date</label>
+                    <input class="form-input" type="text" id="publication_date" name="publication_date" placeholder="YYYY-MM-DD" required>
+
+
                     <input class="btn" type="submit" name="submit" value="Add Publication  ">
                     <!-- <a href="data_entry_management.php">CANCEL</a> -->
                 </form>
