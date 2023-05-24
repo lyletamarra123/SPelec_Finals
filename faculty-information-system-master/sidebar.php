@@ -56,6 +56,7 @@
 	.menu {
 		text-align: center;
 	}
+}
 </style>
 <div class="col-2 menu">
 	<ul>

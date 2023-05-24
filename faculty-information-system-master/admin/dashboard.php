@@ -74,11 +74,7 @@ include('sidebar.php');
         background-color:#5C6BC0;
         border-color:#5C6BC0;
     }
-    @media only screen and (max-width:768px) {
-        .card-panel .fa {
-        }
-
-    }
+   
 </style>
 <?php
     require('../footer.php');
