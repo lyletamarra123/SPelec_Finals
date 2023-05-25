@@ -26,7 +26,8 @@ if (isset($_SESSION['username'])) {
 			<input type="submit" name="submit" class="btn" value="Login">
 		</form>
 		<p><a href="#">Forget password?</a></p>
-		<p><a href="admin/index.php">Admin Login</a></p>
+		<p><a href="../index.php">Guest/Student Login</a></p>
+		<p><a href="../admin/index.php">University Official Login</a></p>
 	</div>
 </div>
 <?php require('footer.php'); ?>

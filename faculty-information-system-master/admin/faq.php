@@ -72,9 +72,9 @@ if (isset($_POST['submit'])) {
     <h2><i class="fa fa-link"></i> Quick Links</h2>
     <p>
         <ul>
-            <li><a href="student.php">Add New Student</a></li>
-            <li><a href="subject.php">Add New Subject</a></li>
-            <li><a href="course.php">Add New Course</a></li>
+            <li><a href="user_management.php">Add New User</a></li>
+            <li><a href="faculty_management.php">Add New Faculty</a></li>
+            <li><a href="data_entry_management.php">Add New Data</a></li>
         </ul>  
     </p>
 </div>

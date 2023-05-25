@@ -21,7 +21,8 @@ if(isset($_SESSION['stno'])){
 			<input type="submit" name="submit" class="btn" value="Login">
 		</form>
 		<p><a href="#">Forget password?</a></p>
-		<p><a href="../index.php">Student Login</a></p>
+		<p><a href="../index.php">Guest/Student Login</a></p>
+		<p><a href="../faculty/index.php">University Faculty Login</a></p>
 	</div>
 </div>
 <?php require('../footer.php'); ?>

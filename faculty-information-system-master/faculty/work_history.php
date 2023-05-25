@@ -30,19 +30,53 @@ $workHistory = Profile::fetchWorkHistoryFromDatabase($facultyId, $conn);
             <h1>Work History</h1>
             <a href="add_work_history.php">Add</a>
             <div class="row">
-                <?php foreach ($workHistory as $history) : ?>
-                    <h2>Work History ID: <?php echo $history['work_history_id']; ?>
-                    <a href="update_work_history.php?id=<?php echo $history['work_history_id']; ?>"> Edit</a></h2>
-                    <p>Company Name: <?php echo $history['company_name']; ?></p>
-                    <p>Job Title: <?php echo $history['job_title']; ?></p>
-                    <p>Start Date: <?php echo $history['start_date']; ?></p>
-                    <p>End Date: <?php echo $history['end_date']; ?></p>
-                    <p>Description: <?php echo $history['description']; ?></p>
-                <?php endforeach; ?>
-
+                <table>
+                    <?php foreach ($workHistory as $history) : ?>
+                        <tr>
+                            <td><strong>Work History ID:</strong></td>
+                            <td><?php echo $history['work_history_id']; ?></td>
+                            <td><a href="update_work_history.php?id=<?php echo $history['work_history_id']; ?>">Edit</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Company Name:</strong></td>
+                            <td><?php echo $history['company_name']; ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Job Title:</strong></td>
+                            <td><?php echo $history['job_title']; ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Start Date:</strong></td>
+                            <td><?php echo $history['start_date']; ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>End Date:</strong></td>
+                            <td><?php echo $history['end_date']; ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Description:</strong></td>
+                            <td><?php echo $history['description']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
             </div>
         </div>
     </div>
 </div>
+<style>
+table {
+    max-width: 500px;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 1em;
+}
+
+tr td:first-child {
+    text-align: right;
+    font-weight: bold;
+}
+</style>
 
 <?php require('.././footer.php'); ?>

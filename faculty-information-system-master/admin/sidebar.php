@@ -63,6 +63,8 @@
 		<a href="user_management.php"><li><i class="fa fa-users"></i>User Management</li></a>
 		<a href="faculty_management.php"><li><i class="fa fa-users"></i>Faculty Management</li></a>
 		<a href="data_entry_management.php"><li><i class="fa fa-users"></i>Data Entry Management</li></a>
+		<a href="faculty_evaluation.php"><li><i class="fa fa-users"></i>Faculty Evaluation</li></a>
+		<a href="faculty_publications.php"><li><i class="fa fa-book"></i>Faculty Publications</li></a>
 		<a href="faq.php"><li><i class="fa fa-users"></i>FAQ</li></a>
 		<!-- a href="settings.php"><li><i class="fa fa-cog"></i>Settings</li></a -->
 		<a href="includes/signout.php"><li><i class="fa fa-sign-out-alt"></i>Logout</li></a>

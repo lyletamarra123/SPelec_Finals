@@ -28,20 +28,33 @@ if ($profile) {
 
 <div>
     <div class="row">
+    <table>
         <div class="col-6">
             <h1>Profile</h1>
             <a href="update_profile.php">Edit</a>
             <div class="row">
-                <p><strong>Faculty ID:</strong> <?php echo $facultyId; ?></p>
-                <p><strong>Faculty Name:</strong> <?php echo $facultyName; ?></p>
-                <p><strong>Position:</strong> <?php echo $position; ?></p>
-                <p><strong>Department:</strong> <?php echo $department; ?></p>
-                <p><strong>Email:</strong> <?php echo $email; ?></p>
-                <p><strong>Phone Number:</strong> <?php echo $phoneNumber; ?></p>
+                <tr><td><strong>Faculty ID:</strong></td> <td><?php echo $facultyId; ?></td></tr>
+                <tr><td><strong>Faculty Name:</strong></td> <td><?php echo $facultyName; ?></td></tr>
+                <tr><td><strong>Position:</strong></td> <td><?php echo $position; ?></td></tr>
+                <tr><td><strong>Department:</strong></td> <td><?php echo $department; ?></td></tr>
+                <tr><td><strong>Email:</strong></td> <td><?php echo $email; ?></td></tr>
+                <tr><td><strong>Phone Number:</strong></td> <td><?php echo $phoneNumber; ?></td></tr>
             </div>
-
         </div>
+    </table>
     </div>
 </div>
-
+<style>
+table{
+	max-width: 500px;
+	border-collapse: collapse;
+}
+td{
+	padding:  1em;
+}
+tr td:first-child{
+	text-align: right;
+	font-weight: bold;
+}
+</style>
 <?php require('.././footer.php'); ?>

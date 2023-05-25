@@ -36,29 +36,18 @@ class CourseSearch
         }
     }
 
-    public function searchCourses($q, $limit = 4)
-    {
+    public function searchCourses($q, $limit = 4) {
         $sql = "SELECT * FROM courses WHERE FacultyName LIKE :q OR CourseCode LIKE :q OR CourseName LIKE :q LIMIT :limit";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':q', '%' . $q . '%');
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $rowCount = $stmt->rowCount();
 
-        if ($rowCount > 0) {
-            foreach ($result as $row) {
-                echo "<tr>";
-                echo "<td>" . $row['CourseCode'] . "</td>";
-                echo "<td>" . $row['CourseName'] . "</td>";
-                echo "<td>" . $row['FacultyName'] . "</td>";
-                echo "<td>" . $row['Department'] . "</td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='4'>No Course or faculty member found.</td></tr>";
-        }
+        return $result;
     }
+
 
     public function displayCourses() {
         $sql = "SELECT * FROM courses";

@@ -89,7 +89,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 <style>
-    /* Rest of your CSS code */
+    .user-list {
+        border: 1px solid #ccc;
+        padding: 10px;
+        width: 100%;
+        background-color: #f7f7f7;
+    }
+
+    .user-list ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .user-list li {
+        border-bottom: 1px solid #ccc;
+        padding: 5px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .icons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .icons:last-child {
+        margin-left: auto;
+    }
+
+    .icon {
+        display: flex;
+        align-items: flex-end;
+
+    }
+
+    .user-list-header {
+        margin-right: 10px;
+    }
+
+    .box {
+        padding-bottom: 30%;
+    }
+    .success-message {
+        color: green;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
 
     .success-message {
         color: green;

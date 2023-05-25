@@ -2,7 +2,7 @@
 class DBConnectInfo {
     private $servername = "localhost";
     private $username = "root";
-    private $password = "";
+    private $password = "august212000";
     private $dbname = "info";
     private $conn;
 

@@ -10,7 +10,7 @@ include('sidebar.php');
 ?>
 <div class="row">
     <div class="col-2">
-        <h2>Welcom Admin</h2>
+        <h2>Welcome Faculty</h2>
         <p>Please contact web master immediately if anything went wrong.<br>
         <br>
         Email : <a href="mailto:webmaster@kln.ac.lk">webmasterlyle&rolly@gmail.com</a>

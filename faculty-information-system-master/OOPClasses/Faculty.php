@@ -38,24 +38,12 @@ class Faculty {
         $sql = "SELECT * FROM faculty WHERE FacultyName LIKE :q LIMIT 4";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([':q' => '%' . $q . '%']);
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $rowCount = $stmt->rowCount();
 
-        if ($rowCount > 0) {
-            foreach ($result as $row) {
-                echo "<tr>";
-                echo "<td>" . $row['FacultyID'] . "</td>";
-                echo "<td>" . $row['FacultyName'] . "</td>";
-                echo "<td>" . $row['Position'] . "</td>";
-                echo "<td>" . $row['Department'] . "</td>";
-                echo "<td>" . $row['Email'] . "</td>";
-                echo "<td>" . $row['PhoneNumber'] . "</td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='3'>No faculty members found.</td></tr>";
-        }
+        return $result;
     }
+
 
     public function getFacultyList() {
         $sql = "SELECT * FROM faculty";
@@ -86,6 +74,36 @@ class Faculty {
                         <td>
                             <a href=\"update_faculty.php?FacultyID={$row['FacultyID']}\"><i class='fa fa-edit'></i></a>
                             <a href=\"delete_faculty.php?FacultyID={$row['FacultyID']}\"><i class='fa fa-trash'></i></a>
+                        </td>
+                    </tr>";
+                }
+            echo "</table>";
+    }
+
+    public function evaluateFaculty() {
+        $sql = "SELECT * FROM faculty";
+        $result = $this->conn->query($sql);
+        if (!$result) {
+            die("Invalid Query: " . $this->conn->errorInfo()[2]);
+            }
+            echo "<table>
+                <tr>
+                    <th>Faculty ID</th>
+                    <th>Faculty Name</th>
+                    <th>Position</th>
+                    <th>Department</th>
+                    <th>Action</th>                      
+                </tr>";
+
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                echo 
+                    "<tr>
+                        <td>{$row['FacultyID']}</td>
+                        <td>{$row['FacultyName']}</td>
+                        <td>{$row['Position']}</td>
+                        <td>{$row['Department']}</td>             
+                        <td>
+                            <button>START</button>
                         </td>
                     </tr>";
                 }
