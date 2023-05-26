@@ -46,19 +46,25 @@
         <input type="text" id="searchBar" oninput="getPublications(this.value)" placeholder="Search by Title, PublicationType, or Author" title="Type a faculty name">
         <table id="publicationList">
             <tr>
-                <th>Title</th>
-				<th>Publication Type</th>
-                <th>Published Date</th>
-				<th>Author/s</th>
-				<th>Author Type</th>
+                <th>Publication ID</th>
+				<th>Title</th>
+                <th>Publication Type</th>
+				<th>Date Published</th>
+				<th>Author</th>
             </tr>
             <?php 
-			require_once('OOPClasses/Publications.php');
-			$db = new DBConnect();
+			include_once('includes/info_db_connect.php');
+			require_once('faculty/class/Publications.php');
+			$db = new DBConnectInfo();
 			$conn = $db->getConnection();
+			$title = null;
+			$publicationType = null;
+			$publicationDate = null;
+			$facultyId = null;
 
-			$publication = new Publication($conn);
-			$publication->getPublicationsList();
+			$publication = new Publications($title, $publicationType, $publicationDate, $facultyId);
+			$publication->getPublicationsList($conn);
+
             ?>
         </table>  
 		</div>

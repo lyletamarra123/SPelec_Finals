@@ -22,6 +22,7 @@ class UserListManager
                 <tr>
                     <th>User Id</th>
                     <th>username</th>
+                    <th>Password</th>
                     <th>Role</th>
                     <th>action</th>
                 </tr>";
@@ -30,6 +31,7 @@ class UserListManager
             echo "<tr>
                     <td>{$row['user_id']}</td>
                     <td>{$row['username']}</td>
+                    <td>" . str_repeat("●", strlen($row['password'])) . "</td>
                     <td>{$row['role_name']}</td>
                     <td>
                         <a href=\"update_user.php?user_id={$row['user_id']}\"><i class='fa fa-edit'></i></a>

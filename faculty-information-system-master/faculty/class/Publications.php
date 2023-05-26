@@ -39,6 +39,69 @@ class Publications
 
         return $publications;
     }
+
+    public static function fetchPublicationFromDatabase2($title, $publicationType, $publicationDate, $facultyId)
+    {
+        $sql = "SELECT *  FROM publications";
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute();
+
+        $stmt->execute();
+
+        $stmt->execute();
+
+        $publications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $publications;
+    }
+
+    public function getPublicationsList($conn) {
+        $sql = "SELECT * FROM publications ORDER BY RAND() LIMIT 4";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        $rowCount = $stmt->rowCount();
+        if ($rowCount > 0) {
+            foreach ($result as $row) {
+                echo "<tr>";
+                echo "<td>" . $row['publication_id'] . "</td>";
+                echo "<td>" . $row['title'] . "</td>";
+                echo "<td>" . $row['publication_type'] . "</td>";
+                echo "<td>" . $row['publication_date'] . "</td>";
+				echo "<td>" . $row['faculty_id'] . "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='3'>No title or author found.</td></tr>";
+        }
+    }
+
+    public function searchPublications($conn, $q, $limit = 4)
+    {
+        $sql = "SELECT * FROM publications WHERE faculty_id LIKE :q OR title LIKE :q OR publication_type LIKE :q LIMIT :limit";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':q', '%' . $q . '%', PDO::PARAM_STR);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        $rowCount = $stmt->rowCount();
+
+        if ($rowCount > 0) {
+            foreach ($result as $row) {
+                echo "<tr>";
+                echo "<td>" . $row['publication_id'] . "</td>";
+                echo "<td>" . $row['title'] . "</td>";
+                echo "<td>" . $row['publication_type'] . "</td>";
+                echo "<td>" . $row['publication_date'] . "</td>";
+				echo "<td>" . $row['faculty_id'] . "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='5'>No title or author found.</td></tr>";
+        }
+    }
+
     // Getter and Setter for title
     public function getTitle()
     {
